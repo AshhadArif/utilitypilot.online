@@ -1,0 +1,18 @@
+import {chromium,expect} from '@playwright/test';
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+const base=process.env.AUDIT_BASE||'http://127.0.0.1:4183',browser=await chromium.launch({channel:'chrome'}),page=await browser.newPage();
+const load=async buffer=>{await page.locator('#image-file').setInputFiles({name:'fixture.jpg',mimeType:'image/jpeg',buffer});};
+try{
+ await page.goto(base+'/tools/image/image-inspector/');
+ const images=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=40;c.height=20;const ctx=c.getContext('2d');ctx.fillStyle='#ff0000';ctx.fillRect(0,0,40,20);const jpg=c.toDataURL('image/jpeg').split(',')[1],png=c.toDataURL('image/png').split(',')[1];c.width=4000;c.height=4000;return {jpg,png,max:c.toDataURL('image/png').split(',')[1]};});
+ const jpeg=Buffer.from(images.jpg,'base64'),exif=Buffer.from('ffe1002245786966000049492a0008000000010012010300010000000600000000000000','hex');
+ await load(Buffer.concat([jpeg.subarray(0,2),exif,jpeg.subarray(2)]));await expect(page.locator('#image-details')).toContainText('20 × 40');await page.locator('#run').click();await expect(page.locator('#output')).toHaveValue(/Width \(px\): 20\nHeight \(px\): 40/);
+ await load(Buffer.from(images.max,'base64'));await expect(page.locator('#image-details')).toContainText('4000 × 4000');await page.locator('#run').click();await expect(page.locator('#output')).toHaveValue(/Width \(px\): 4000/);
+ const oversized=Buffer.from(images.png,'base64');oversized.writeUInt32BE(4001,16);oversized.writeUInt32BE(4000,20);await load(oversized);await expect(page.locator('#tool-error')).toContainText('16 megapixels');
+ const png=Buffer.from(images.png,'base64'),animation=Buffer.alloc(20);animation.writeUInt32BE(8);animation.write('acTL',4);animation.writeUInt32BE(2,8);await load(Buffer.concat([png.subarray(0,33),animation,png.subarray(33)]));await expect(page.locator('#tool-error')).toContainText('Animated PNG');
+ await page.goto(base+'/tools/image/image-cropper/');await load(png);await expect(page.locator('#image-details')).toContainText('40 × 20');const box=await page.locator('#source-canvas').boundingBox();await page.mouse.move(box.x+.5,box.y+.5);await page.mouse.down();await page.mouse.move(box.x+box.width-.5,box.y+box.height-.5);await page.mouse.up();await expect(page.locator('#opt-width')).toHaveValue('40');await expect(page.locator('#opt-height')).toHaveValue('20');await page.locator('#run').click();await expect(page.locator('#output')).toHaveValue(/40 × 20/);
+ await page.locator('#source-canvas').click({position:{x:.5,y:.5}});await expect(page.locator('#opt-width')).toHaveValue('1');await expect(page.locator('#opt-height')).toHaveValue('1');await page.locator('#run').click();await expect(page.locator('#output')).toHaveValue(/1 × 1/);
+ await page.goto(base+'/tools/image/image-compressor/');await load(jpeg);await expect(page.locator('#image-details')).toContainText('40 × 20');await page.locator('#opt-target').fill('0.001');await page.locator('#opt-resize').check();await page.locator('#opt-quality').fill('1');await page.locator('#run').click();await expect(page.locator('#result-summary')).toContainText('Target not met',{timeout:15000});
+ await writeFile('test-results/prelaunch/image-report.json',JSON.stringify({orientation:'pass',max16MP:'pass',over16MP:'rejected',animatedPNG:'rejected',inclusivePointerCrop:'pass',singlePixelPointerCrop:'pass',impossibleTargetWithResize:'reported'},null,2));console.log('PASS image orientation, pixel cap, animation rejection, inclusive pointer selection and bounded compression');
+}finally{await browser.close();}

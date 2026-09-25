@@ -1,0 +1,14 @@
+export {loadImage,runImage} from '../lib/image.mjs';
+const $=id=>document.getElementById(id);let original,drag=null,activeSlug,clear;
+export function clearSource(){original=null;drag=null;clear=null;const c=$('source-canvas');if(c)c.onpointerdown=c.onpointermove=c.onpointerup=c.onpointercancel=null;}
+function paint(){if(!original)return;const canvas=$('source-canvas'),ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(original.canvas,0,0);if(activeSlug==='image-cropper'){const x=Number($('opt-x').value),y=Number($('opt-y').value),w=Number($('opt-width').value),h=Number($('opt-height').value);ctx.strokeStyle='#e15c13';ctx.lineWidth=Math.max(2,original.width/300);ctx.strokeRect(x,y,w,h);}}
+export function syncControls(target,source,slug){if(slug==='image-resizer'&&$('opt-lock').checked){if(target.id==='opt-width')$('opt-height').value=Math.max(1,Math.round(Number(target.value)*source.height/source.width));if(target.id==='opt-height')$('opt-width').value=Math.max(1,Math.round(Number(target.value)*source.width/source.height));}if(slug==='image-cropper'){if($('opt-ratio').value!=='free')$('opt-height').value=Math.max(1,Math.round(Number($('opt-width').value)/Number($('opt-ratio').value)));paint();}}
+export function displaySource(source,slug,onChange){original=source;activeSlug=slug;clear=onChange;const c=$('source-canvas');c.width=source.width;c.height=source.height;document.querySelector('.canvas-wrap').hidden=false;$('image-details').textContent=`${source.width} × ${source.height} pixels · ${source.file.size.toLocaleString()} bytes · ${source.type}`;
+ if(slug==='image-resizer'){$('opt-width').value=source.width;$('opt-height').value=source.height;}
+ if(slug==='image-cropper'){$('opt-x').value=0;$('opt-y').value=0;$('opt-width').value=source.width;$('opt-height').value=source.height;$('opt-ratio').value='free';}
+ if(slug==='image-color-picker'){$('opt-x').value=0;$('opt-y').value=0;}
+ if($('opt-format'))$('opt-format').value=source.type;paint();
+ const position=e=>{const box=c.getBoundingClientRect();return {x:Math.min(source.width-1,Math.max(0,Math.floor((e.clientX-box.left)/box.width*source.width))),y:Math.min(source.height-1,Math.max(0,Math.floor((e.clientY-box.top)/box.height*source.height)))};};
+ c.onpointerdown=e=>{if(!['image-cropper','image-color-picker'].includes(slug))return;e.preventDefault();drag=position(e);c.setPointerCapture(e.pointerId);clear();$('opt-x').value=drag.x;$('opt-y').value=drag.y;if(slug==='image-cropper'){$('opt-width').value=1;$('opt-height').value=1;syncControls($('opt-width'),source,slug);}};
+ c.onpointermove=e=>{if(!drag||slug!=='image-cropper')return;const p=position(e);$('opt-x').value=Math.min(drag.x,p.x);$('opt-y').value=Math.min(drag.y,p.y);$('opt-width').value=Math.abs(p.x-drag.x)+1;$('opt-height').value=Math.abs(p.y-drag.y)+1;syncControls($('opt-width'),source,slug);};c.onpointerup=()=>drag=null;c.onpointercancel=()=>drag=null;
+}

@@ -1,0 +1,866 @@
+[
+  {
+    "id": "UP001",
+    "name": "Word and character counter",
+    "slug": "word-counter",
+    "category": "text",
+    "path": "/tools/text/word-counter/",
+    "description": "Measure copy against a length limit.",
+    "inputs": "Text; locale; reading speed.",
+    "outputs": "Words, graphemes, code points, sentences and estimated reading time.",
+    "method": "Segment Unicode text; label counting rules; minutes = words / chosen WPM.",
+    "limitations": "Emoji sequences; CJK segmentation; abbreviations; empty input",
+    "aliases": [
+      "word counter",
+      "character counter without spaces",
+      "count words in pasted text",
+      "reading time calculator for text",
+      "count characters including emoji"
+    ],
+    "related": [
+      "/tools/text/text-cleaner/",
+      "/tools/text/case-converter/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP002",
+    "name": "Text cleaner",
+    "slug": "text-cleaner",
+    "category": "text",
+    "path": "/tools/text/text-cleaner/",
+    "description": "Repair spacing after copying text.",
+    "inputs": "Text; individually selected whitespace operations.",
+    "outputs": "Cleaned text and per-operation change counts.",
+    "method": "Apply an explicit ordered pipeline; retain original and preview before applying.",
+    "limitations": "NBSP; tabs; CRLF; preserve paragraph breaks; never remove zero-width characters silently",
+    "aliases": [
+      "remove extra spaces from text",
+      "remove line breaks from copied pdf text",
+      "trim spaces at beginning of each line",
+      "remove blank lines from text",
+      "replace non breaking spaces with normal spaces"
+    ],
+    "related": [
+      "/tools/text/word-counter/",
+      "/tools/text/remove-duplicate-lines/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP003",
+    "name": "Remove duplicate lines",
+    "slug": "remove-duplicate-lines",
+    "category": "text",
+    "path": "/tools/text/remove-duplicate-lines/",
+    "description": "Remove repeated entries without changing list order.",
+    "inputs": "Lines; case and trim comparison options; keep first or last.",
+    "outputs": "Unique lines and removed count.",
+    "method": "Use normalized comparison keys while retaining the selected original line.",
+    "limitations": "Blank lines; Unicode normalization opt-in; case; final newline",
+    "aliases": [
+      "remove duplicate lines from text",
+      "remove duplicate lines keep order",
+      "remove duplicate lines ignore case",
+      "keep last duplicate line",
+      "remove repeated email addresses from list"
+    ],
+    "related": [
+      "/tools/text/sort-lines/",
+      "/tools/text/compare-lists/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP004",
+    "name": "Sort lines",
+    "slug": "sort-lines",
+    "category": "text",
+    "path": "/tools/text/sort-lines/",
+    "description": "Put a pasted list into useful order.",
+    "inputs": "Lines; alphabetical, natural, numeric or length mode; locale.",
+    "outputs": "Sorted list and explanation of ordering.",
+    "method": "Stable sorting with explicit comparator and descending option.",
+    "limitations": "item2 vs item10; invalid numbers; equal keys; locale accents",
+    "aliases": [
+      "sort lines alphabetically online",
+      "natural sort list online",
+      "sort numbers one per line",
+      "sort lines by length",
+      "reverse order of lines"
+    ],
+    "related": [
+      "/tools/text/remove-duplicate-lines/",
+      "/tools/text/compare-lists/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP005",
+    "name": "Text case converter",
+    "slug": "case-converter",
+    "category": "text",
+    "path": "/tools/text/case-converter/",
+    "description": "Normalize capitalization of pasted copy.",
+    "inputs": "Text; upper, lower, sentence or title mode; locale.",
+    "outputs": "Converted text with editable preview.",
+    "method": "Locale-aware casing; documented heuristic sentence and title modes.",
+    "limitations": "Turkish I; acronyms; names; title style is not universal",
+    "aliases": [
+      "convert text to lowercase",
+      "convert text to uppercase",
+      "sentence case converter",
+      "title case converter online",
+      "change capitalization of pasted text"
+    ],
+    "related": [
+      "/tools/text/text-cleaner/",
+      "/tools/web/slug-generator/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP006",
+    "name": "Find and replace text",
+    "slug": "find-and-replace",
+    "category": "text",
+    "path": "/tools/text/find-and-replace/",
+    "description": "Change repeated literal text without editing each occurrence.",
+    "inputs": "Text; literal find and replacement; case and whole-word options.",
+    "outputs": "Preview, match count and replaced text.",
+    "method": "Literal matching by default; preserve source; explicit Apply.",
+    "limitations": "Empty search disallowed; replacement dollar signs literal; overlapping matches defined",
+    "aliases": [
+      "find and replace text online",
+      "replace multiple occurrences in text",
+      "replace text case insensitive",
+      "replace whole words online",
+      "replace commas with line breaks"
+    ],
+    "related": [
+      "/tools/text/text-diff/",
+      "/tools/text/text-cleaner/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP007",
+    "name": "Text difference checker",
+    "slug": "text-diff",
+    "category": "text",
+    "path": "/tools/text/text-diff/",
+    "description": "Locate edits between two versions.",
+    "inputs": "Old and new text; line or word view.",
+    "outputs": "Accessible additions, deletions and unchanged passages.",
+    "method": "Bounded diff algorithm in worker; context collapse optional.",
+    "limitations": "Repeated lines; CRLF; long lines; whitespace settings; no semantic meaning claim",
+    "aliases": [
+      "compare two text files online",
+      "highlight differences between two texts",
+      "compare text ignoring whitespace",
+      "word by word text difference",
+      "compare pasted text versions"
+    ],
+    "related": [
+      "/tools/text/compare-lists/",
+      "/tools/text/find-and-replace/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP008",
+    "name": "Compare lists",
+    "slug": "compare-lists",
+    "category": "text",
+    "path": "/tools/text/compare-lists/",
+    "description": "Find shared or missing entries in two lists.",
+    "inputs": "Two newline lists; comparison normalization options.",
+    "outputs": "Intersection, A-only, B-only and union with counts.",
+    "method": "Set membership; preserve first-seen order and show duplicate totals separately.",
+    "limitations": "Duplicates vs occurrence counts; empty entries; case; no decision recommendation",
+    "aliases": [
+      "compare two lists online",
+      "find common items in two lists",
+      "find missing entries between lists",
+      "items in list a not list b",
+      "combine two lists without duplicates"
+    ],
+    "related": [
+      "/tools/text/remove-duplicate-lines/",
+      "/tools/text/sort-lines/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP009",
+    "name": "JSON formatter and validator",
+    "slug": "json-formatter",
+    "category": "data",
+    "path": "/tools/data/json-formatter/",
+    "description": "Make JSON readable and identify syntax errors.",
+    "inputs": "JSON text/file; indentation; compact output option.",
+    "outputs": "Formatted or minified JSON; validation diagnostics.",
+    "method": "Tokenize and parse without eval; preserve number lexemes and key order.",
+    "limitations": "Duplicate keys detected; huge integers; trailing commas; depth cap; never silently repair",
+    "aliases": [
+      "json formatter",
+      "json beautifier",
+      "validate json online",
+      "json minifier",
+      "format json without losing large numbers"
+    ],
+    "related": [
+      "/tools/data/json-to-csv/",
+      "/tools/data/csv-to-json/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP010",
+    "name": "JSON to CSV converter",
+    "slug": "json-to-csv",
+    "category": "data",
+    "path": "/tools/data/json-to-csv/",
+    "description": "Turn object records into spreadsheet-ready rows.",
+    "inputs": "Array of objects; field selection; flatten option; delimiter.",
+    "outputs": "CSV preview, row count and downloadable file.",
+    "method": "Union keys in first-seen order; nested arrays serialized as JSON; explicit object flattening.",
+    "limitations": "Dot-key collisions; null vs empty; unsafe spreadsheet formulas; no automatic row explosion",
+    "aliases": [
+      "convert json to csv online",
+      "convert nested json to csv",
+      "json array of objects to csv",
+      "json to csv select columns",
+      "json to csv preserve missing fields"
+    ],
+    "related": [
+      "/tools/data/csv-to-json/",
+      "/tools/data/csv-column-editor/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP011",
+    "name": "CSV to JSON converter",
+    "slug": "csv-to-json",
+    "category": "data",
+    "path": "/tools/data/csv-to-json/",
+    "description": "Prepare tabular exports for a JSON consumer.",
+    "inputs": "CSV text/file; delimiter; header choice; explicit type settings.",
+    "outputs": "Array of objects or arrays; diagnostics.",
+    "method": "Parse quoted records; strings by default; opt-in types with warnings.",
+    "limitations": "Duplicate headers; leading zeros; multiline values; BOM; empty rows",
+    "aliases": [
+      "csv to json online",
+      "csv to json preserve leading zeros",
+      "csv to json with headers",
+      "csv to json all values as strings",
+      "convert semicolon csv to json"
+    ],
+    "related": [
+      "/tools/data/json-formatter/",
+      "/tools/data/json-to-csv/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP012",
+    "name": "CSV viewer and validator",
+    "slug": "csv-viewer",
+    "category": "data",
+    "path": "/tools/data/csv-viewer/",
+    "description": "Inspect a file before importing it.",
+    "inputs": "CSV/TSV text/file; delimiter; header and encoding settings.",
+    "outputs": "Virtualized table; record/column counts; parse diagnostics.",
+    "method": "Real record parser; bounded table preview distinct from full data.",
+    "limitations": "Ragged rows; quoted newlines; duplicate headers; never render cells as HTML",
+    "aliases": [
+      "csv viewer online",
+      "check csv for formatting errors",
+      "validate csv column count",
+      "view csv with quoted newlines",
+      "inspect csv delimiter"
+    ],
+    "related": [
+      "/tools/data/csv-column-editor/",
+      "/tools/data/csv-deduplicate/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP013",
+    "name": "Remove duplicate CSV rows",
+    "slug": "csv-deduplicate",
+    "category": "data",
+    "path": "/tools/data/csv-deduplicate/",
+    "description": "Remove duplicate records by selected fields.",
+    "inputs": "CSV; key columns; first or last retention.",
+    "outputs": "CSV plus retained and removed record counts.",
+    "method": "Compare tuples of field values rather than joined ambiguous strings.",
+    "limitations": "Composite key collisions; blanks; header retention; quoted delimiters",
+    "aliases": [
+      "remove duplicate rows csv online",
+      "remove csv duplicates by column",
+      "deduplicate csv keep header",
+      "keep last duplicate csv row",
+      "find duplicate csv records by two columns"
+    ],
+    "related": [
+      "/tools/data/csv-viewer/",
+      "/tools/data/csv-merge/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP014",
+    "name": "CSV column editor",
+    "slug": "csv-column-editor",
+    "category": "data",
+    "path": "/tools/data/csv-column-editor/",
+    "description": "Select, rename and reorder fields for an import.",
+    "inputs": "CSV; checked columns; ordered names.",
+    "outputs": "Transformed CSV and schema preview.",
+    "method": "Operate on parsed field positions; keyboard reorder controls.",
+    "limitations": "Duplicate output names rejected; preserve leading zeros; empty selection rejected",
+    "aliases": [
+      "select columns from csv online",
+      "reorder csv columns online",
+      "remove a column from csv",
+      "rename csv headers",
+      "extract one column from csv"
+    ],
+    "related": [
+      "/tools/data/csv-viewer/",
+      "/tools/data/json-to-csv/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP015",
+    "name": "CSV and TSV delimiter converter",
+    "slug": "delimiter-converter",
+    "category": "data",
+    "path": "/tools/data/delimiter-converter/",
+    "description": "Match the delimiter expected by another application.",
+    "inputs": "Parsed CSV/TSV; input and output delimiter; quoting and line endings.",
+    "outputs": "Re-serialized delimited file and preview.",
+    "method": "Parse then serialize; never globally replace delimiter characters.",
+    "limitations": "Embedded tabs and commas; quotes; multiline cells; BOM",
+    "aliases": [
+      "convert csv to tsv",
+      "convert tsv to csv",
+      "change csv delimiter to semicolon",
+      "replace csv delimiter without changing quoted text",
+      "convert pipe delimited file to csv"
+    ],
+    "related": [
+      "/tools/data/csv-viewer/",
+      "/tools/data/csv-to-json/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP016",
+    "name": "Merge CSV files",
+    "slug": "csv-merge",
+    "category": "data",
+    "path": "/tools/data/csv-merge/",
+    "description": "Append repeated exports into one dataset.",
+    "inputs": "Multiple CSV files; ordered inputs; matching headers.",
+    "outputs": "One CSV; per-file row counts and mismatch errors.",
+    "method": "MVP requires identical headers in identical order; append records once.",
+    "limitations": "No relational joins; mismatched schema blocks export; header-only file; file order",
+    "aliases": [
+      "merge csv files same headers",
+      "combine csv files into one online",
+      "merge csv without duplicate headers",
+      "append csv files in browser",
+      "merge csv files preserve row order"
+    ],
+    "related": [
+      "/tools/data/csv-deduplicate/",
+      "/tools/data/csv-split/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP017",
+    "name": "Split CSV file",
+    "slug": "csv-split",
+    "category": "data",
+    "path": "/tools/data/csv-split/",
+    "description": "Produce smaller import batches.",
+    "inputs": "CSV; positive rows per part; repeat-header option.",
+    "outputs": "Numbered CSV downloads and manifest counts.",
+    "method": "Split parsed records instead of physical lines; generate parts on demand.",
+    "limitations": "Quoted newlines; final partial batch; huge part counts capped; no byte-size guarantee",
+    "aliases": [
+      "split csv file by rows online",
+      "split csv keep header",
+      "split csv into 1000 row files",
+      "split csv containing multiline fields",
+      "split csv without uploading"
+    ],
+    "related": [
+      "/tools/data/csv-merge/",
+      "/tools/data/csv-viewer/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP018",
+    "name": "Image resizer",
+    "slug": "image-resizer",
+    "category": "image",
+    "path": "/tools/image/image-resizer/",
+    "description": "Meet a pixel-dimension requirement.",
+    "inputs": "JPEG/PNG/WebP; width/height; fit or stretch; format.",
+    "outputs": "Resized image with before/after dimensions and bytes.",
+    "method": "Decode orientation; raster resampling; aspect lock default.",
+    "limitations": "No upscaling by default; transparency; metadata behavior; no promise of lossless resizing",
+    "aliases": [
+      "resize image exact dimensions online",
+      "resize image keep aspect ratio",
+      "resize image by percentage",
+      "resize image without stretching",
+      "resize png with transparency"
+    ],
+    "related": [
+      "/tools/image/image-cropper/",
+      "/tools/image/image-compressor/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP019",
+    "name": "Image compressor",
+    "slug": "image-compressor",
+    "category": "image",
+    "path": "/tools/image/image-compressor/",
+    "description": "Reduce bytes for an upload.",
+    "inputs": "JPEG/PNG/WebP; target bytes; quality; optional resize permission.",
+    "outputs": "Best candidate, actual byte size and target met/unmet.",
+    "method": "Bounded quality search for lossy encoders; PNG re-encode with honest limits.",
+    "limitations": "Never promise target met; PNG may grow; target impossible; no universal no-quality-loss claim",
+    "aliases": [
+      "compress image to target size",
+      "compress jpeg under 200kb",
+      "reduce webp file size online",
+      "compress image without resizing",
+      "why compressed png is larger"
+    ],
+    "related": [
+      "/tools/image/image-resizer/",
+      "/tools/image/image-converter/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP020",
+    "name": "Image format converter",
+    "slug": "image-converter",
+    "category": "image",
+    "path": "/tools/image/image-converter/",
+    "description": "Use a supported format in another app.",
+    "inputs": "JPEG/PNG/WebP; output format; JPEG matte color.",
+    "outputs": "Converted file and transparency/size explanation.",
+    "method": "Decode and re-encode through supported browser codec; verify output MIME.",
+    "limitations": "WebP encoder availability; alpha to JPEG needs matte; no HEIC SVG animated images MVP",
+    "aliases": [
+      "webp to png online",
+      "png to jpg white background",
+      "jpg to webp converter",
+      "webp to jpg converter",
+      "convert png to webp transparent"
+    ],
+    "related": [
+      "/tools/image/image-inspector/",
+      "/tools/image/image-compressor/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP021",
+    "name": "Image cropper",
+    "slug": "image-cropper",
+    "category": "image",
+    "path": "/tools/image/image-cropper/",
+    "description": "Remove unwanted borders or frame an image.",
+    "inputs": "Image; x/y/width/height; free or fixed ratio.",
+    "outputs": "Cropped file and dimension preview.",
+    "method": "Integer pixel crop after orientation; numeric controls supplement pointer handles.",
+    "limitations": "Bounds; tiny crops; touch; original retained; no face detection promise",
+    "aliases": [
+      "crop image to aspect ratio",
+      "crop image exact pixels",
+      "crop square image online",
+      "remove image borders by cropping",
+      "crop image without resizing"
+    ],
+    "related": [
+      "/tools/image/image-resizer/",
+      "/tools/image/image-inspector/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP022",
+    "name": "Image size and dimension checker",
+    "slug": "image-inspector",
+    "category": "image",
+    "path": "/tools/image/image-inspector/",
+    "description": "Understand why an image fails requirements.",
+    "inputs": "JPEG/PNG/WebP file.",
+    "outputs": "Pixel width/height, actual bytes, MIME observation, ratio and alpha report.",
+    "method": "Read file properties and decode dimensions; inspect pixels where needed.",
+    "limitations": "Extension vs detected type; no comprehensive EXIF/GPS claim; pixel count differs from bytes",
+    "aliases": [
+      "image dimension checker online",
+      "check image size in pixels",
+      "find aspect ratio of image",
+      "check png transparency",
+      "check image file size in kb"
+    ],
+    "related": [
+      "/tools/image/image-resizer/",
+      "/tools/image/image-converter/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP023",
+    "name": "Image color picker",
+    "slug": "image-color-picker",
+    "category": "image",
+    "path": "/tools/image/image-color-picker/",
+    "description": "Sample usable colors from artwork.",
+    "inputs": "Raster image; pointer or keyboard coordinate; sample area.",
+    "outputs": "HEX/RGB values and selected swatch.",
+    "method": "Sample decoded sRGB pixel or explicit average; show coordinates.",
+    "limitations": "ICC conversion/browser differences; transparent pixels; no brand-color certainty",
+    "aliases": [
+      "pick color from image online",
+      "get hex color from image",
+      "sample rgb from photo",
+      "image color picker exact pixel",
+      "average color of selected image area"
+    ],
+    "related": [
+      "/tools/web/color-converter/",
+      "/tools/web/contrast-checker/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP024",
+    "name": "URL slug generator",
+    "slug": "slug-generator",
+    "category": "web",
+    "path": "/tools/web/slug-generator/",
+    "description": "Prepare readable page or file identifiers.",
+    "inputs": "Text; separator; ASCII transliteration or Unicode mode.",
+    "outputs": "Editable slug with transformation explanation.",
+    "method": "Normalize with explicit locale and mapping policy; no uniqueness promise.",
+    "limitations": "Non-Latin text; emoji; empty result; avoid pretending slug changes improve ranking",
+    "aliases": [
+      "slug generator online",
+      "convert title to url slug",
+      "unicode slug generator",
+      "remove accents from url slug",
+      "generate lowercase hyphenated slug"
+    ],
+    "related": [
+      "/tools/web/url-parser/",
+      "/tools/text/text-cleaner/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP025",
+    "name": "URL and query-string parser",
+    "slug": "url-parser",
+    "category": "web",
+    "path": "/tools/web/url-parser/",
+    "description": "Inspect components and repeated parameters.",
+    "inputs": "Absolute URL or query string in separate modes.",
+    "outputs": "Components and ordered key-value pairs; JSON/text copy.",
+    "method": "Use standards-based parser; retain duplicate keys and raw input.",
+    "limitations": "Plus-space form semantics; malformed percent escapes; credentials redacted by default",
+    "aliases": [
+      "url parser online",
+      "query string parser",
+      "extract domain from url",
+      "parse repeated url parameters",
+      "decode query string plus signs"
+    ],
+    "related": [
+      "/tools/web/url-encoder-decoder/",
+      "/tools/web/utm-builder/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP026",
+    "name": "URL encoder and decoder",
+    "slug": "url-encoder-decoder",
+    "category": "web",
+    "path": "/tools/web/url-encoder-decoder/",
+    "description": "Encode a component or read escaped data.",
+    "inputs": "Text; component vs form mode; encode/decode.",
+    "outputs": "Escaped or decoded text with errors.",
+    "method": "UTF-8 percent encoding; explicit mode; one decoding pass.",
+    "limitations": "Literal plus; percent25 double encoding; invalid bytes; not link validation",
+    "aliases": [
+      "url encode online",
+      "url decode online",
+      "encode query parameter value",
+      "decode percent encoded utf8",
+      "url decode plus versus space"
+    ],
+    "related": [
+      "/tools/web/url-parser/",
+      "/tools/web/base64/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP027",
+    "name": "UTM campaign URL builder",
+    "slug": "utm-builder",
+    "category": "web",
+    "path": "/tools/web/utm-builder/",
+    "description": "Create consistently tagged campaign links.",
+    "inputs": "HTTP(S) URL; source/medium/campaign and optional term/content.",
+    "outputs": "Built link, parameter table and warnings.",
+    "method": "Set UTM fields through URL API; preserve unrelated params; preview changes.",
+    "limitations": "Existing UTM replacement; fragment; case conventions; no analytics guarantee",
+    "aliases": [
+      "utm builder online",
+      "campaign url builder",
+      "add utm parameters to existing url",
+      "utm link generator with fragment",
+      "build campaign link with spaces"
+    ],
+    "related": [
+      "/tools/web/url-parser/",
+      "/tools/web/url-cleaner/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP028",
+    "name": "URL tracking parameter cleaner",
+    "slug": "url-cleaner",
+    "category": "web",
+    "path": "/tools/web/url-cleaner/",
+    "description": "Remove selected tracking fields before sharing.",
+    "inputs": "HTTP(S) URL; explicit allowlisted removal choices.",
+    "outputs": "Proposed cleaned link and removed-parameter list.",
+    "method": "Conservative versioned parameter list; preview Apply; no remote fetch.",
+    "limitations": "Signed URLs may break; unknown parameters retained; no malware/privacy certification",
+    "aliases": [
+      "remove tracking parameters from url",
+      "remove utm parameters from link",
+      "remove fbclid from url",
+      "clean url keep important parameters",
+      "remove gclid from link"
+    ],
+    "related": [
+      "/tools/web/url-parser/",
+      "/tools/web/utm-builder/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP029",
+    "name": "HEX RGB HSL converter",
+    "slug": "color-converter",
+    "category": "web",
+    "path": "/tools/web/color-converter/",
+    "description": "Translate a design color into another notation.",
+    "inputs": "HEX/RGB/HSL including supported alpha.",
+    "outputs": "Equivalent values and swatch.",
+    "method": "sRGB conversion with stated rounding; reject unsupported spaces.",
+    "limitations": "Short hex; alpha; hue wrap; out-of-range input; no CMYK accuracy claim",
+    "aliases": [
+      "hex to rgb converter",
+      "rgb to hex converter",
+      "hex to hsl converter",
+      "hsl to rgb online",
+      "convert hex color with alpha"
+    ],
+    "related": [
+      "/tools/web/contrast-checker/",
+      "/tools/image/image-color-picker/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP030",
+    "name": "Color contrast checker",
+    "slug": "contrast-checker",
+    "category": "web",
+    "path": "/tools/web/contrast-checker/",
+    "description": "Check a foreground/background text pair.",
+    "inputs": "Two opaque sRGB colors; text size and weight.",
+    "outputs": "Ratio plus WCAG text thresholds and explanation.",
+    "method": "Relative luminance then (Llighter+0.05)/(Ldarker+0.05).",
+    "limitations": "Transparent backgrounds unsupported initially; ratio alone is not accessibility certification",
+    "aliases": [
+      "color contrast checker",
+      "check text background contrast",
+      "wcag aa contrast ratio",
+      "contrast checker large text",
+      "hex color accessibility contrast"
+    ],
+    "related": [
+      "/tools/web/color-converter/",
+      "/tools/image/image-color-picker/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP031",
+    "name": "Base64 encoder and decoder",
+    "slug": "base64",
+    "category": "web",
+    "path": "/tools/web/base64/",
+    "description": "Convert text to or from Base64 representation.",
+    "inputs": "UTF-8 text or Base64; standard/URL-safe selection.",
+    "outputs": "Encoded text or decoded text/bytes download.",
+    "method": "Encode bytes with standard or URL-safe alphabet; strict padding validation.",
+    "limitations": "Invalid UTF-8 not silently replaced; Base64 is not encryption; secret text risk",
+    "aliases": [
+      "base64 encode utf8",
+      "base64 decode online",
+      "base64url decoder",
+      "decode base64 with emoji",
+      "base64 invalid utf8 bytes"
+    ],
+    "related": [
+      "/tools/web/url-encoder-decoder/",
+      "/tools/web/html-entities/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP032",
+    "name": "HTML entity encoder and decoder",
+    "slug": "html-entities",
+    "category": "web",
+    "path": "/tools/web/html-entities/",
+    "description": "Escape markup as text or read encoded characters.",
+    "inputs": "Text; encode/decode; named/numeric options.",
+    "outputs": "Escaped or decoded plain text.",
+    "method": "Audited entity table/parser; no live markup insertion.",
+    "limitations": "Double encoding; malformed entities; no claim to sanitize executable HTML",
+    "aliases": [
+      "html entity decoder",
+      "html entity encoder",
+      "decode numeric html entities",
+      "escape html special characters",
+      "decode ampersand lt gt text"
+    ],
+    "related": [
+      "/tools/web/base64/",
+      "/tools/text/text-cleaner/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  }
+]

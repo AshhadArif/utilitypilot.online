@@ -1,0 +1,20 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {auditCases} from './audit-cases.mjs';
+import {configs} from '../src/data/configs.mjs';
+import tools from '../src/data/tools.json' with {type:'json'};
+import {runText} from '../src/lib/text.mjs';
+import {runData} from '../src/lib/data.mjs';
+import {runWeb,parseColor} from '../src/lib/web.mjs';
+import {searchQuality} from '../src/lib/image.mjs';
+for(const [slug,cases] of Object.entries(auditCases)){const tool=tools.find(t=>t.slug===slug),run=tool.category==='text'?runText:tool.category==='data'?runData:runWeb,defaults=Object.fromEntries(configs[slug].options.map(f=>[f.key,f.value]));
+ cases.forEach((c,i)=>test(`Independent ${slug} case ${i+1}`,()=>{const work=()=>run(slug,c.a,c.b||'',{...defaults,...c.o});if(c.error)assert.throws(work,new RegExp(c.error));else{const r=work();if('text'in c)assert.equal(r.text,c.text);if(c.contains)assert.ok(r.text.includes(c.contains));}}));
+ test(`${slug}: empty and oversized input`,()=>{if(tool.category==='text')assert.equal(typeof run(slug,'','',defaults).text,'string');else assert.throws(()=>run(slug,'','',defaults),/empty|at least two/i);assert.throws(()=>run(slug,'x'.repeat((tool.category==='data'?5242880:slug==='text-diff'?262144:1048576)+1),'',defaults),/large/);});
+}
+test('Headerless CSV applies the same 50,000-record cap',()=>{assert.equal(runData('csv-viewer',Array(50000).fill('x').join('\n'),'',{header:false}).table.total,50000);assert.throws(()=>runData('csv-viewer',Array(50001).fill('x').join('\n'),'',{header:false}),/50,000/);});
+test('Malformed CSS colors are rejected instead of repaired',()=>{for(const s of ['rgb(1,2,3,)','rgb(0x10 0 0)','hsl(deg 0% 0%)','rgb(1 2 3 .5)','rgb(1 / 2 / 3)'])assert.throws(()=>parseColor(s),undefined,s);});
+test('Compression keeps the highest tested acceptable quality',async()=>{const encode=async q=>({size:Math.round(q*1000),q});const output=await searchQuality(encode,await encode(.9),.9,600);assert.ok(output.size<=600);assert.ok(output.q>.59);});
+test('Compression honestly returns the smallest tested candidate for an impossible target',async()=>{const encode=async q=>({size:100+q*1000});assert.equal((await searchQuality(encode,await encode(.9),.9,1)).size,110);});
+test('Replacement expansion is bounded before allocating the output',()=>{assert.throws(()=>runText('find-and-replace','x'.repeat(20000),'',{find:'x',replacement:'a'.repeat(2000)}),/20 MiB/);});
+test('Malformed HTTP URLs cannot silently become a different URL',()=>{for(const a of ['https:example.com','https:///example.com','https://example.com/a b','https://example.com/\nsecret','https://example.com\\a'])assert.throws(()=>runWeb('url-cleaner',a),/complete HTTP/);});
+test('Contrast preview preserves fractional input channel values',()=>{assert.equal(runWeb('contrast-checker','rgb(100.4 100.4 100.4)','#fff').contrast.foreground,'rgb(100.4 100.4 100.4)');});
