@@ -1,5 +1,7 @@
 # Keyword and problem research
 
+Update, 29 September 2026: the historical discovery dataset below remains unchanged. The newly supplied Google US Ahrefs export provides actual metrics for 44 Text & Lists keywords; use the [Ahrefs content map](UTILITYPILOT-AHREFS-CONTENT-MAP.md) for those metrics and implementation decisions. The “unavailable” statements below refer to the earlier 260-row dataset, not the new export.
+
 Research conducted: 25 September 2026. Audience assumption: global English. Dataset: [260 opportunities in CSV](keyword-opportunities.csv). Provenance: [source ledger](RESEARCH-SOURCES.md).
 
 ## What the dataset does and does not say
@@ -49,4 +51,3 @@ JSON-to-CSV and CSV-to-JSON retain separate pages: opposite inputs, typing decis
 Before expanding, inspect Google manually in chosen markets/device contexts and record result types. If authorized keyword exports become available, retain source, period, location and method with every metric. Interview a few actual users about completed workflows; distinguish feedback from promotional forum posts. After launch, use query impressions and page engagement to improve an existing page before proposing a new one.
 
 No metric validation is required to build an honest small tool; it is required before claiming quantified market opportunity.
-

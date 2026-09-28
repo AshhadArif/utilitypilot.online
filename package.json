@@ -11,7 +11,8 @@
     "test:browser": "node tests/browser.mjs",
     "audit:site": "node scripts/audit.mjs",
     "check": "npm run test && npm run build && npm run audit:site",
-    "audit:prelaunch": "node tests/prelaunch-browser.mjs"
+    "audit:prelaunch": "node tests/prelaunch-browser.mjs",
+    "audit:content": "node tests/seo-content-audit.mjs"
   },
   "engines": {
     "node": ">=22"

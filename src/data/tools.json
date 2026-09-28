@@ -15,11 +15,21 @@
       "character counter without spaces",
       "count words in pasted text",
       "reading time calculator for text",
-      "count characters including emoji"
+      "count characters including emoji",
+      "word counter online",
+      "character counter",
+      "character counter online",
+      "count characters in text",
+      "count words in text",
+      "line counter",
+      "count lines in text",
+      "text analyzer"
     ],
     "related": [
       "/tools/text/text-cleaner/",
-      "/tools/text/case-converter/"
+      "/tools/text/case-converter/",
+      "/tools/text/text-diff/",
+      "/tools/text/remove-duplicate-lines/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -42,11 +52,20 @@
       "remove line breaks from copied pdf text",
       "trim spaces at beginning of each line",
       "remove blank lines from text",
-      "replace non breaking spaces with normal spaces"
+      "replace non breaking spaces with normal spaces",
+      "text cleaner",
+      "text formatter",
+      "format text online",
+      "clean up text online",
+      "remove extra spaces",
+      "remove whitespace",
+      "collapse extra blank lines"
     ],
     "related": [
       "/tools/text/word-counter/",
-      "/tools/text/remove-duplicate-lines/"
+      "/tools/text/remove-duplicate-lines/",
+      "/tools/text/find-and-replace/",
+      "/tools/text/case-converter/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -69,11 +88,16 @@
       "remove duplicate lines keep order",
       "remove duplicate lines ignore case",
       "keep last duplicate line",
-      "remove repeated email addresses from list"
+      "remove repeated email addresses from list",
+      "remove duplicate lines",
+      "duplicate line remover",
+      "remove duplicate lines online"
     ],
     "related": [
       "/tools/text/sort-lines/",
-      "/tools/text/compare-lists/"
+      "/tools/text/compare-lists/",
+      "/tools/text/text-cleaner/",
+      "/tools/text/word-counter/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -96,11 +120,18 @@
       "natural sort list online",
       "sort numbers one per line",
       "sort lines by length",
-      "reverse order of lines"
+      "reverse order of lines",
+      "alphabetize list",
+      "sort list alphabetically",
+      "sort text alphabetically",
+      "sort list online",
+      "sort lines"
     ],
     "related": [
       "/tools/text/remove-duplicate-lines/",
-      "/tools/text/compare-lists/"
+      "/tools/text/compare-lists/",
+      "/tools/text/text-cleaner/",
+      "/tools/text/find-and-replace/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -123,11 +154,18 @@
       "convert text to uppercase",
       "sentence case converter",
       "title case converter online",
-      "change capitalization of pasted text"
+      "change capitalization of pasted text",
+      "title case converter",
+      "uppercase converter",
+      "lowercase converter",
+      "text case converter",
+      "convert text to title case"
     ],
     "related": [
       "/tools/text/text-cleaner/",
-      "/tools/web/slug-generator/"
+      "/tools/web/slug-generator/",
+      "/tools/text/word-counter/",
+      "/tools/text/find-and-replace/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -150,11 +188,18 @@
       "replace multiple occurrences in text",
       "replace text case insensitive",
       "replace whole words online",
-      "replace commas with line breaks"
+      "replace commas with line breaks",
+      "find and replace text",
+      "remove spaces from text",
+      "comma separated list",
+      "text to list",
+      "list to text"
     ],
     "related": [
       "/tools/text/text-diff/",
-      "/tools/text/text-cleaner/"
+      "/tools/text/text-cleaner/",
+      "/tools/text/sort-lines/",
+      "/tools/text/remove-duplicate-lines/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -177,11 +222,16 @@
       "highlight differences between two texts",
       "compare text ignoring whitespace",
       "word by word text difference",
-      "compare pasted text versions"
+      "compare pasted text versions",
+      "compare text",
+      "text diff",
+      "compare two texts",
+      "text comparison tool"
     ],
     "related": [
       "/tools/text/compare-lists/",
-      "/tools/text/find-and-replace/"
+      "/tools/text/find-and-replace/",
+      "/tools/text/text-cleaner/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -208,7 +258,9 @@
     ],
     "related": [
       "/tools/text/remove-duplicate-lines/",
-      "/tools/text/sort-lines/"
+      "/tools/text/sort-lines/",
+      "/tools/text/text-diff/",
+      "/tools/text/find-and-replace/"
     ],
     "status": "implemented",
     "version": "1.0.0",

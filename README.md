@@ -28,6 +28,8 @@ node tests/workflows.mjs
 
 The browser suite checks all tools, all routes, copy/download/reset, 320px and 390px tool layouts, and automated WCAG checks. Processor tests cover independently expected results and boundary cases. Automated accessibility checks do not replace assistive-technology testing.
 
+The September 2026 text-content expansion uses the supplied 44-row Ahrefs export. See the [keyword content map](docs/UTILITYPILOT-AHREFS-CONTENT-MAP.md) and [implementation report](docs/UTILITYPILOT-SEO-CONTENT-IMPLEMENTATION.md). After building and starting the preview, run `npm run audit:content` to verify the source metrics, published examples, static content, fragment links, search aliases and mobile layouts. The eight text pages share the existing tools; no keyword-variant routes were added.
+
 The independent pre-launch audit added precision, bounds, image, URL, discovery and content fixes. See [the audit report](docs/PRE-LAUNCH-AUDIT.md), [all-route indexability inventory](docs/INDEXABILITY-AUDIT.csv), and [51-page intent review](docs/CONTENT-INTENT-AUDIT.csv). The report includes commands for the additional browser, image and search regression suites. Use `AUDIT_BASE` to point browser tests to a fresh preview, and `AUDIT_CHANNEL=msedge` for the independent Edge audit.
 
 ## Production release
