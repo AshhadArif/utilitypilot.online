@@ -1,5 +1,7 @@
 # UtilityPilot SEO content implementation
 
+Historical report for the September expansion. Its keyword data is preserved in the [September content map](UTILITYPILOT-AHREFS-CONTENT-MAP-2026-09-28.md). The [October history-driven update](UTILITYPILOT-AHREFS-SEO-IMPLEMENTATION.md) adds paragraph counting and further content; word totals and seven-metric descriptions below document the earlier state.
+
 Implemented and verified locally, 28–29 September 2026. The existing tools, route structure and design are preserved. Eight Text & Lists pages now contain 8,159 words of task-specific editorial content in total, excluding the navigation, footer, tool controls and contents lists. This is a measured outcome, not a word-count requirement. Three existing guides received contextual links.
 
 ## Pages Updated
@@ -24,7 +26,7 @@ The homepage, directory, four category pages and related-tool system retain thei
 
 ## Keywords Covered
 
-All 44 supplied keywords, original metrics, Parent Topics, roles, actions and reasons are in [the content map](UTILITYPILOT-AHREFS-CONTENT-MAP.md). This table accounts for the 41 mapped keywords; the remaining three are listed below.
+All 44 supplied keywords, original metrics, Parent Topics, roles, actions and reasons are in [the September content map](UTILITYPILOT-AHREFS-CONTENT-MAP-2026-09-28.md). This table accounts for the 41 mapped keywords; the remaining three are listed below.
 
 | Keywords from the actual export | Target page / section |
 |---|---|

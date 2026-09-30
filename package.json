@@ -12,7 +12,8 @@
     "audit:site": "node scripts/audit.mjs",
     "check": "npm run test && npm run build && npm run audit:site",
     "audit:prelaunch": "node tests/prelaunch-browser.mjs",
-    "audit:content": "node tests/seo-content-audit.mjs"
+    "audit:content": "node tests/seo-content-audit.mjs",
+    "audit:history": "node tests/ahrefs-history-audit.mjs"
   },
   "engines": {
     "node": ">=22"

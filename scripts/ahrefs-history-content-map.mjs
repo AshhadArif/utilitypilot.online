@@ -1,49 +1,60 @@
-# UtilityPilot Ahrefs content map
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+import {parseCSV} from '../src/lib/data.mjs';
 
-Prepared 1 October 2026 before implementation of this update. Primary source: [the supplied search-volume history export](research/ahrefs-counter-search-volume-history-2026-10-01.csv), originally named `my_535b04645f71b9e6b7a3f7fb32681763_search-volume-history_2026-10-01_01-48-07.csv`. SHA-256: `62088dd3869f9931654e6b549b8f8ca471c5aec6c5932143aea54b059c52598a`. There are 12 monthly rows, October 2025–September 2026, and exactly five keyword columns. The other history export in Downloads contains age/date keywords and is not a UtilityPilot source.
+const file='docs/research/ahrefs-counter-search-volume-history-2026-10-01.csv';
+const bytes=await readFile(file),data=parseCSV(bytes.toString('utf8'));
+const headers=data.shift(),keywords=headers.slice(2);
+assert.deepEqual(headers,['Date','Total volume','word counter','character counter','character count','word counter online','paragraph counter']);
+assert.equal(data.length,12);
+const months=data.map(row=>({date:row[0],total:Number(row[1]),volumes:row.slice(2).map(Number)}));
+assert.ok(months.every(m=>m.volumes.every(Number.isFinite)));
+const latest=months.at(-1);assert.equal(latest.date,'2026-09-01');
+const target='/tools/text/word-counter/';
+const decisions=[
+ ['Count words and check a draft length',target,'Primary','Expand existing page','Retain the established counting tool; add paragraph functionality, metric comparisons and realistic writing examples.'],
+ ['Count characters with and without whitespace',target+'#character-counter','Supporting','Expand existing section','Existing grapheme/code-point outputs already satisfy the operation; strengthen instructions, examples and character-count use cases.'],
+ ['Check the number of characters in text',target+'#character-counter','Supporting','Consolidate into existing section','Same task as character counter; no character-count route or duplicated tool.'],
+ ['Count words using a browser tool',target,'Supporting','Consolidate into existing page','Same operation as word counter; explain explicit Count text action, local processing and result export.'],
+ ['Count paragraph blocks in pasted text',target+'#paragraph-counter','Supporting','Add genuine metric and supporting section','Count runs of nonblank lines separated by blank lines. Add the metric to the existing form and explain paragraphs versus lines, rather than creating a duplicate interface.']
+];
+const fmt=n=>n.toLocaleString('en-US');
+let doc=`# UtilityPilot Ahrefs content map
+
+Prepared 1 October 2026 before implementation of this update. Primary source: [the supplied search-volume history export](research/ahrefs-counter-search-volume-history-2026-10-01.csv), originally named \`my_535b04645f71b9e6b7a3f7fb32681763_search-volume-history_2026-10-01_01-48-07.csv\`. SHA-256: \`${createHash('sha256').update(bytes).digest('hex')}\`. There are 12 monthly rows, October 2025–September 2026, and exactly five keyword columns. The other history export in Downloads contains age/date keywords and is not a UtilityPilot source.
 
 ## Scope and provenance
 
 This is historical volume data, not the earlier Google US overview. The file does not include a country/search-engine column, KD, Traffic Potential, CPC, Parent Topic, ranks, clicks or backlinks. Geography and engine are **N/A**; do not infer a market from the filename. All absent metrics below are **N/A**. Values are estimates supplied by Ahrefs, not visits or ranking forecasts. No Parent Topic relationships are inferred from unavailable metrics: clustering below is an editorial judgment about task overlap and the current implementation.
 
-The [28 September overview map](UTILITYPILOT-AHREFS-CONTENT-MAP-2026-09-28.md) and its 44-keyword source are preserved as a separate historical artifact. Its 782,000 word-counter figure and other metrics are not substituted into this dataset. The old generator now writes only that archived map. Recreate this current map with `node scripts/ahrefs-history-content-map.mjs`.
+The [28 September overview map](UTILITYPILOT-AHREFS-CONTENT-MAP-2026-09-28.md) and its 44-keyword source are preserved as a separate historical artifact. Its 782,000 word-counter figure and other metrics are not substituted into this dataset. The old generator now writes only that archived map. Recreate this current map with \`node scripts/ahrefs-history-content-map.mjs\`.
 
 ## Keyword → intent → existing page → action
 
 | Keyword | Sept 2026 Volume | Historical Pattern | Search Intent | Target Page | Primary/Supporting | Action |
 |---|---:|---|---|---|---|---|
-| word counter | 43,025 | Oct 40,722 → Sept 43,025; range 37,796–44,951; peak 2026-06 | Count words and check a draft length | /tools/text/word-counter/ | Primary | Expand existing page |
-| character counter | 1,401 | Oct 875 → Sept 1,401; range 875–1,861; peak 2026-04 | Count characters with and without whitespace | /tools/text/word-counter/#character-counter | Supporting | Expand existing section |
-| character count | 1,310 | Oct 1,399 → Sept 1,310; range 1,146–1,528; peak 2026-08 | Check the number of characters in text | /tools/text/word-counter/#character-counter | Supporting | Consolidate into existing section |
-| word counter online | 285 | Oct 424 → Sept 285; range 231–1,113; peak 2026-03 | Count words using a browser tool | /tools/text/word-counter/ | Supporting | Consolidate into existing page |
-| paragraph counter | 22 | Oct 316 → Sept 22; range 13–792; peak 2025-11 | Count paragraph blocks in pasted text | /tools/text/word-counter/#paragraph-counter | Supporting | Add genuine metric and supporting section |
-
+`;
+keywords.forEach((keyword,i)=>{
+ const values=months.map(m=>m.volumes[i]),min=Math.min(...values),max=Math.max(...values),peak=months[values.indexOf(max)].date.slice(0,7);
+ const pattern=`Oct ${fmt(values[0])} → Sept ${fmt(values.at(-1))}; range ${fmt(min)}–${fmt(max)}; peak ${peak}`;
+ const [intent,page,role,action]=decisions[i];
+ doc+=`| ${keyword} | ${fmt(latest.volumes[i])} | ${pattern} | ${intent} | ${page} | ${role} | ${action} |\n`;
+});
+doc+=`
 | Keyword | KD | Traffic Potential | CPC | Parent Topic | Rank / Clicks / Backlinks |
 |---|---|---|---|---|---|
-| word counter | N/A | N/A | N/A | N/A | N/A |
-| character counter | N/A | N/A | N/A | N/A | N/A |
-| character count | N/A | N/A | N/A | N/A | N/A |
-| word counter online | N/A | N/A | N/A | N/A | N/A |
-| paragraph counter | N/A | N/A | N/A | N/A | N/A |
+${keywords.map(k=>`| ${k} | N/A | N/A | N/A | N/A | N/A |`).join('\n')}
 
 ## Monthly source values and total discrepancy
 
 | Month | Source Total volume | word counter | character counter | character count | word counter online | paragraph counter | Sum of five keyword columns | Source total minus sum |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| 2025-10 | 44,352 | 40,722 | 875 | 1,399 | 424 | 316 | 43,736 | 616 |
-| 2025-11 | 45,858 | 41,763 | 916 | 1,501 | 487 | 792 | 45,459 | 399 |
-| 2025-12 | 41,593 | 37,796 | 1,768 | 1,146 | 350 | 264 | 41,324 | 269 |
-| 2026-01 | 43,303 | 39,664 | 1,614 | 1,325 | 331 | 81 | 43,015 | 288 |
-| 2026-02 | 43,005 | 39,844 | 1,378 | 1,253 | 231 | 51 | 42,757 | 248 |
-| 2026-03 | 46,698 | 42,444 | 1,673 | 1,211 | 1,113 | 13 | 46,454 | 244 |
-| 2026-04 | 47,416 | 43,516 | 1,861 | 1,414 | 313 | 18 | 47,122 | 294 |
-| 2026-05 | 47,074 | 43,738 | 1,544 | 1,235 | 315 | 21 | 46,853 | 221 |
-| 2026-06 | 48,744 | 44,951 | 1,814 | 1,485 | 258 | 22 | 48,530 | 214 |
-| 2026-07 | 44,609 | 41,176 | 1,411 | 1,397 | 361 | 31 | 44,376 | 233 |
-| 2026-08 | 44,181 | 40,825 | 1,291 | 1,528 | 318 | 28 | 43,990 | 191 |
-| 2026-09 | 46,276 | 43,025 | 1,401 | 1,310 | 285 | 22 | 46,043 | 233 |
-
-The source Total volume does not equal the sum of its five visible keyword columns in any month. In September it reports **46,276**, while those columns sum to **46,043**, a difference of **233**. Keep both numbers as labelled; the file does not explain the mismatch. The visible-keyword sum ranges from **41,324** to **48,530** over the year. These are arithmetic totals of estimates for potentially overlapping audiences, not unique users, clicks or Traffic Potential.
+`;
+for(const m of months){const sum=m.volumes.reduce((a,b)=>a+b,0);doc+=`| ${m.date.slice(0,7)} | ${[m.total,...m.volumes,sum,m.total-sum].map(fmt).join(' | ')} |\n`;}
+const sums=months.map(m=>m.volumes.reduce((a,b)=>a+b,0));
+doc+=`
+The source Total volume does not equal the sum of its five visible keyword columns in any month. In September it reports **46,276**, while those columns sum to **46,043**, a difference of **233**. Keep both numbers as labelled; the file does not explain the mismatch. The visible-keyword sum ranges from **${fmt(Math.min(...sums))}** to **${fmt(Math.max(...sums))}** over the year. These are arithmetic totals of estimates for potentially overlapping audiences, not unique users, clicks or Traffic Potential.
 
 Word counter consistently supplies the largest measured volume. Character-count wording has meaningful recurring demand and shares one operation with character counter. Word counter online belongs on the same tool rather than a new online variant. Paragraph counter falls from an early peak of 792 in November to 22 in September; prioritize a useful, bounded addition to the current counter rather than treating its peak as current demand. A small paragraph total still merits an accurate implemented metric and explanation.
 
@@ -55,11 +66,7 @@ There is no separate Character Counter or Paragraph Counter page. Keep Word Coun
 
 Paragraph rule: normalize CRLF/CR to LF for line boundaries; a paragraph is a contiguous run of nonblank lines. A line that is empty after JavaScript trim is blank. Single newlines within a block do not start another paragraph; repeated blank lines do not create empty paragraphs. Empty/whitespace-only input returns zero paragraphs. This is plain-text structure, not an interpretation of HTML, Word/PDF styling or body-paragraph intent.
 
-- **word counter:** Retain the established counting tool; add paragraph functionality, metric comparisons and realistic writing examples.
-- **character counter:** Existing grapheme/code-point outputs already satisfy the operation; strengthen instructions, examples and character-count use cases.
-- **character count:** Same task as character counter; no character-count route or duplicated tool.
-- **word counter online:** Same operation as word counter; explain explicit Count text action, local processing and result export.
-- **paragraph counter:** Count runs of nonblank lines separated by blank lines. Add the metric to the existing form and explain paragraphs versus lines, rather than creating a duplicate interface.
+${keywords.map((k,i)=>`- **${k}:** ${decisions[i][4]}`).join('\n')}
 
 Also improve the Text & Lists hub with task descriptions and direct links to counting, formatting, case conversion, diff and list operations. Audit all eight current text articles, add missing workflow links rather than repeat existing explanations, and connect the cleanup/Unicode guides to paragraph methodology. Preserve data/image/web tools and metadata; do not extrapolate this five-query dataset into claims about their demand.
 
@@ -69,10 +76,10 @@ The following phrases come from the brief or clear task descriptions, not additi
 
 | Supporting intent terms | Target |
 |---|---|
-| online word counter; word count; word count checker; count words; count words online; words counter; word counter tool; word counter tool online; online word count | /tools/text/word-counter/ |
-| character counter online; character count tool; count characters; character counter tool | /tools/text/word-counter/#character-counter |
-| paragraph count; count paragraphs | /tools/text/word-counter/#paragraph-counter |
-| line counter; text analyzer | Existing /tools/text/word-counter/#line-counter and #text-analysis sections |
+| online word counter; word count; word count checker; count words; count words online; words counter; word counter tool; word counter tool online; online word count | ${target} |
+| character counter online; character count tool; count characters; character counter tool | ${target}#character-counter |
+| paragraph count; count paragraphs | ${target}#paragraph-counter |
+| line counter; text analyzer | Existing ${target}#line-counter and #text-analysis sections |
 | text formatter; remove whitespace; remove extra spaces | Existing Text Cleaner; qualify the supported operations |
 | title case; uppercase; lowercase; text diff; alphabetize list; duplicate removal; find and replace; simple list conversion | Existing task-specific text pages; retain previous content and add useful connections only |
 
@@ -85,3 +92,6 @@ The architecture decision is our inference: the existing combined counter alread
 ## Pages intentionally not created
 
 No new routes: /word-counter-online/, /online-word-counter/, /word-count-checker/, /count-words-online/, /character-count/, /character-count-tool/, /count-characters/ and duplicate counter interfaces are unnecessary. Paragraph counting will be real functionality within the current counter. Existing #character-counter links remain valid and a new #paragraph-counter section supplies the explanation. No fragment becomes its own canonical or sitemap entry.
+`;
+await writeFile('docs/UTILITYPILOT-AHREFS-CONTENT-MAP.md',doc);
+console.log('Mapped five history keywords and preserved all 12 monthly rows; missing metrics N/A.');

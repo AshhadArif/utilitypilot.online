@@ -5,11 +5,11 @@
     "slug": "word-counter",
     "category": "text",
     "path": "/tools/text/word-counter/",
-    "description": "Measure copy against a length limit.",
+    "description": "Count words, characters, paragraphs and lines in one text summary.",
     "inputs": "Text; locale; reading speed.",
-    "outputs": "Words, graphemes, code points, sentences and estimated reading time.",
-    "method": "Segment Unicode text; label counting rules; minutes = words / chosen WPM.",
-    "limitations": "Emoji sequences; CJK segmentation; abbreviations; empty input",
+    "outputs": "Words, graphemes with and without whitespace, code points, sentences, paragraphs, lines and estimated reading seconds.",
+    "method": "Segment Unicode words and graphemes; count paragraph blocks separated by blank lines; reading seconds = ceil(words / chosen WPM * 60).",
+    "limitations": "Language-dependent segmentation; graphemes differ from code points; paragraphs require blank separators; plain-text input only.",
     "aliases": [
       "word counter",
       "character counter without spaces",
@@ -23,7 +23,14 @@
       "count words in text",
       "line counter",
       "count lines in text",
-      "text analyzer"
+      "text analyzer",
+      "character count",
+      "paragraph counter",
+      "paragraph count",
+      "count paragraphs",
+      "online word counter",
+      "word count checker",
+      "count words online"
     ],
     "related": [
       "/tools/text/text-cleaner/",
@@ -231,7 +238,8 @@
     "related": [
       "/tools/text/compare-lists/",
       "/tools/text/find-and-replace/",
-      "/tools/text/text-cleaner/"
+      "/tools/text/text-cleaner/",
+      "/tools/text/word-counter/"
     ],
     "status": "implemented",
     "version": "1.0.0",

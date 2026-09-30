@@ -1,6 +1,6 @@
 // Expected strings are hand-worked examples, not outputs captured from processors.
 export const auditCases={
- 'word-counter':[{a:'Hi 👩‍💻',contains:'Words: 1'},{a:'e\u0301',contains:'Characters (graphemes): 1'},{a:'x',o:{wpm:0},error:'Reading speed'}],
+ 'word-counter':[{a:'Hi 👩‍💻',contains:'Words: 1'},{a:'e\u0301',contains:'Characters (graphemes): 1'},{a:'x',o:{wpm:0},error:'Reading speed'},{a:'A short draft.\nIt has two lines.\n\nReview it carefully.',contains:'Paragraphs: 2'},{a:'One line\nwrapped here',contains:'Paragraphs: 1'},{a:' \n\t\n',contains:'Paragraphs: 0'}],
  'text-cleaner':[{a:' A\u00a0 B\r\nC ',text:'A B\nC'},{a:'a\nb\n\nc',o:{join:'paragraphs'},text:'a b\n\nc'},{a:'👩‍💻',text:'👩‍💻'}],
  'remove-duplicate-lines':[{a:' A \na\nB',o:{trim:true,ignoreCase:true},text:' A \nB'},{a:'a\nb\na',o:{keep:'last'},text:'b\na'},{a:'\n\n',text:''}],
  'sort-lines':[{a:'9007199254740993\n9007199254740992',o:{mode:'numeric'},text:'9007199254740992\n9007199254740993'},{a:'-1.0000000000000001\n-1.0000000000000002\n0\n1e-40\n.1',o:{mode:'numeric'},text:'-1.0000000000000002\n-1.0000000000000001\n0\n1e-40\n.1'},{a:'1\nno',o:{mode:'numeric'},error:'decimal number'}],

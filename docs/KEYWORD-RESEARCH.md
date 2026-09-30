@@ -1,6 +1,8 @@
 # Keyword and problem research
 
-Update, 29 September 2026: the historical discovery dataset below remains unchanged. The newly supplied Google US Ahrefs export provides actual metrics for 44 Text & Lists keywords; use the [Ahrefs content map](UTILITYPILOT-AHREFS-CONTENT-MAP.md) for those metrics and implementation decisions. The “unavailable” statements below refer to the earlier 260-row dataset, not the new export.
+Update, 1 October 2026: the [current content map](UTILITYPILOT-AHREFS-CONTENT-MAP.md) uses a separate five-keyword monthly history export. Its September word-counter volume is 43,025; no market, KD or Traffic Potential fields are supplied. The [September overview map](UTILITYPILOT-AHREFS-CONTENT-MAP-2026-09-28.md) retains the earlier 44-keyword data without mixing the two datasets.
+
+Update, 29 September 2026: the historical discovery dataset below remains unchanged. The newly supplied Google US Ahrefs export provides actual metrics for 44 Text & Lists keywords; use the [September Ahrefs content map](UTILITYPILOT-AHREFS-CONTENT-MAP-2026-09-28.md) for those metrics and implementation decisions. The “unavailable” statements below refer to the earlier 260-row dataset, not the new export.
 
 Research conducted: 25 September 2026. Audience assumption: global English. Dataset: [260 opportunities in CSV](keyword-opportunities.csv). Provenance: [source ledger](RESEARCH-SOURCES.md).
 

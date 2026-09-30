@@ -19,6 +19,27 @@ test('graphemes, words, estimates and language limits',()=>{
  const r=runText('word-counter','Hello world!','',{wpm:200});assert.equal(r.stats.Words,2);assert.equal(r.stats['Characters (graphemes)'],12);assert.equal(r.stats['Estimated reading seconds'],1);
  const u=runText('word-counter','e\u0301');assert.equal(u.stats['Characters (graphemes)'],1);assert.equal(u.stats['Unicode code points'],2);assert.throws(()=>runText('word-counter','a','',{wpm:0}));
 });
+for(const [name,input,paragraphs,lineCount] of [
+ ['empty','',0,0],['spaces','   ',0,1],['blank lines','\n\n',0,2],
+ ['one block','A short draft.',1,1],['hard wrap','A short draft.\nIt has two lines.',1,2],
+ ['blank separator','A short draft.\nIt has two lines.\n\nReview it carefully.',2,4],
+ ['repeated separators','A\n\n\n\nB',2,5],['edge blanks','\n\nA\n\nB\n\n',2,6],
+ ['space separator','A\n  \nB',2,3],['tab separator','A\n\t\nB',2,3],
+ ['nonbreaking space separator','A\n\u00a0\nB',2,3],['CRLF separator','A\r\n\r\nB',2,3],
+ ['CR separator','A\r\rB',2,3],['heading and body','Heading\n\nBody text.',2,3],
+ ['list block','- apple\n- pear',1,2],['literal markup','<p>A</p><p>B</p>',1,1],
+ ['emoji block','👩‍💻',1,1],['zero width is content','A\n\u200b\nB',1,3]
+])test('paragraph count: '+name,()=>{
+ const result=runText('word-counter',input);assert.equal(result.stats.Paragraphs,paragraphs);assert.equal(result.stats.Lines,lineCount);assert.ok(result.text.includes('Paragraphs: '+paragraphs));
+});
+test('adding paragraph count preserves existing metrics and input',()=>{
+ const input='One two.\nThree four.',result=runText('word-counter',input);
+ assert.deepEqual(result.stats,{Words:4,'Characters (graphemes)':20,'Characters without whitespace':17,'Unicode code points':20,Sentences:2,Lines:2,Paragraphs:1,'Estimated reading seconds':2});
+ assert.equal(input,'One two.\nThree four.');
+});
+test('paragraph counting handles a bounded large sequence',()=>{
+ const result=runText('word-counter','a\n\n'.repeat(10000));assert.equal(result.stats.Paragraphs,10000);assert.equal(result.stats.Words,10000);
+});
 test('cleanup keeps paragraphs and zero-width joiners by default',()=>{
  assert.equal(runText('text-cleaner','  A  useful\u00a0idea\nwrapped across lines.\n\n  A new paragraph.  ','',{join:'paragraphs'}).text,'A useful idea wrapped across lines.\n\nA new paragraph.');
  assert.equal(runText('text-cleaner','👨‍👩‍👧').text,'👨‍👩‍👧');assert.equal(runText('text-cleaner','a\r\nb').text,'a\nb');

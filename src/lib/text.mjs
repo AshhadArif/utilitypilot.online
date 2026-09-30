@@ -16,7 +16,10 @@ export function runText(slug,a='',b='',o={}){
   for(const s of new Intl.Segmenter(locale,{granularity:'word'}).segment(a))if(s.isWordLike)words++;
   for(const s of new Intl.Segmenter(locale,{granularity:'grapheme'}).segment(a)){graphemes++;if(!/^\s+$/u.test(s.segment))withoutWhitespace++;}
   const speed=number(o.wpm??200,'Reading speed',1,2000);
-  const stats={Words:words,'Characters (graphemes)':graphemes,'Characters without whitespace':withoutWhitespace,'Unicode code points':[...a].length,Sentences:a.trim()?[...new Intl.Segmenter(locale,{granularity:'sentence'}).segment(a)].length:0,Lines:lines(a).length,'Estimated reading seconds':Math.ceil(words/speed*60)};
+  // Count contiguous nonblank lines as one paragraph; keep hard wraps inside it.
+  const textLines=lines(a);let paragraphs=0,inParagraph=false;
+  for(const line of textLines){if(line.trim()){if(!inParagraph)paragraphs++;inParagraph=true;}else inParagraph=false;}
+  const stats={Words:words,'Characters (graphemes)':graphemes,'Characters without whitespace':withoutWhitespace,'Unicode code points':[...a].length,Sentences:a.trim()?[...new Intl.Segmenter(locale,{granularity:'sentence'}).segment(a)].length:0,Lines:textLines.length,Paragraphs:paragraphs,'Estimated reading seconds':Math.ceil(words/speed*60)};
   return result(Object.entries(stats).map(([k,v])=>`${k}: ${v}`).join('\n'),`${words} words · ${graphemes} visible characters`,{stats});
  }
  if(slug==='text-cleaner'){

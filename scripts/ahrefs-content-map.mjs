@@ -87,5 +87,5 @@ The observed tool-first pages vary from compact instructions to extended referen
 
 No Create new page actions: existing selectable modes and literal replacement cover the supported tasks without duplicating interfaces. Blank-line queries receive a qualified collapse explanation, not a falsely labelled complete remover. “Text analyzer” covers basic statistics only. Literal comma joining is for simple entries without embedded commas, quotes or line breaks; record-aware CSV tasks stay in Data & Tables. The ignored font/divider/duplicate-word intents need capabilities the site does not have. Similar keyword variations are consolidated, not discarded.
 `;
-await writeFile('docs/UTILITYPILOT-AHREFS-CONTENT-MAP.md',doc);
+await writeFile('docs/UTILITYPILOT-AHREFS-CONTENT-MAP-2026-09-28.md',doc);
 console.log(`Mapped ${rows.length} source keywords; ${[...decisions.values()].filter(d=>d.action==='Ignore').length} ignored; no new routes.`);

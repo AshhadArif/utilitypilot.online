@@ -12,6 +12,11 @@ const examples=[
  ['word-counter','Hello world!',{}, {Words:2,'Characters (graphemes)':12,'Characters without whitespace':11,'Unicode code points':12,Sentences:1,Lines:1,'Estimated reading seconds':1}],
  ['word-counter','One two.\nThree four.',{}, {Words:4,'Characters (graphemes)':20,'Characters without whitespace':17,Sentences:2,Lines:2}],
  ['word-counter','A B!',{}, {'Characters (graphemes)':4,'Characters without whitespace':3,'Unicode code points':4}],
+ ['word-counter','Room 2: $5',{}, {'Characters (graphemes)':10,'Characters without whitespace':8}],
+ ['word-counter','A\nB!',{}, {'Characters (graphemes)':4,'Characters without whitespace':3}],
+ ['word-counter','A short draft.\nIt has two lines.\n\nReview it carefully.',{}, {Words:10,Paragraphs:2,Lines:4}],
+ ['word-counter','A short draft.\nIt has two lines.\nReview it carefully.',{}, {Words:10,Paragraphs:1,Lines:3}],
+ ['word-counter','I build clear documentation. My work helps teams test changes and publish reliable instructions.',{}, {Words:14,Paragraphs:1}],
  ['word-counter','e\u0301',{}, {'Characters (graphemes)':1,'Unicode code points':2}],
  ['word-counter','👨‍👩‍👧‍👦',{}, {'Characters (graphemes)':1,'Unicode code points':7}],
  ['word-counter','apple\npear\n',{}, {Lines:2}],
@@ -57,7 +62,7 @@ const rawRows=parseCSV(decoded,'\t'),headers=rawRows.shift();
 const normalized=JSON.parse((await readFile('docs/research/ahrefs-text-keywords.json','utf8')).replace(/^\uFEFF/,''));
 assert.deepEqual(rawRows.map(row=>Object.fromEntries(headers.map((h,i)=>[h,row[i]]))),normalized,'Every Ahrefs field preserved');
 assert.equal(normalized.length,44);
-const map=await readFile('docs/UTILITYPILOT-AHREFS-CONTENT-MAP.md','utf8');
+const map=await readFile('docs/UTILITYPILOT-AHREFS-CONTENT-MAP-2026-09-28.md','utf8');
 for(const r of normalized)assert.equal(map.split('\n').filter(line=>line.startsWith(`| ${r.Keyword} |`)).length,1,r.Keyword);
 
 const base=process.env.AUDIT_BASE||'http://127.0.0.1:4173';
