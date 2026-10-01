@@ -1,6 +1,6 @@
 # UtilityPilot
 
-32 local browser tools, 12 practical guides, four category hubs, a searchable directory, and seven trust/support pages. Built as crawlable static HTML with small JavaScript modules and local workers. No application server is needed for transformations.
+40 local browser tools, 13 practical guides, five category hubs, a searchable directory, and seven trust/support pages. Built as crawlable static HTML with small JavaScript modules and local workers. No application server is needed for transformations.
 
 ## Run locally
 
@@ -56,3 +56,7 @@ SEO and hosting handover: [SEO checklist](docs/SEO-LAUNCH-CHECKLIST.md), [Hostin
 - `docs/`: original research and implementation handover.
 
 Add tools through the registry, configuration, processor and content together. Add meaningful tests, related links and a guide association. Only working, supported tools should be included in the public registry. Do not rerun `import-catalog.mjs` without reviewing its diff against current implementation metadata.
+
+## New tool expansion
+
+Eight distinct tools extend the original 32-tool collection. See [the existing-site audit](docs/UTILITYPILOT-EXISTING-SITE-AUDIT.md), [candidate research](docs/UTILITYPILOT-NEW-PAGE-RESEARCH.md) and [implementation report](docs/UTILITYPILOT-NEW-PAGE-IMPLEMENTATION.md). New tools use local processors, with JSON tree exploration and a six-tool Developer Tools hub. Run `npm run audit:new-tools` against the preview after building.

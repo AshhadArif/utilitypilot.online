@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {newConfigs} from '../src/data/new-configs.mjs';
 import assert from 'node:assert/strict';
 import {runText} from '../src/lib/text.mjs';
 import {runData,parseCSV,serializeCSV,parseJSON,formatJSON} from '../src/lib/data.mjs';
@@ -7,7 +8,7 @@ import {imageHeader} from '../src/lib/image.mjs';
 import {configs} from '../src/data/configs.mjs';
 import tools from '../src/data/tools.json' with {type:'json'};
 const defaults=slug=>Object.fromEntries(configs[slug].options.map(f=>[f.key,f.value]));
-for(const t of tools.filter(t=>t.category!=='image')){
+for(const t of tools.filter(t=>t.category!=='image'&&!newConfigs[t.slug])){
  test(t.slug+' accepts sample, handles empty and bounds oversized input',()=>{
   const run=t.category==='text'?runText:t.category==='data'?runData:runWeb,c=configs[t.slug],o=defaults(t.slug);
   const r=run(t.slug,c.sample,c.sampleB||'',o);assert.equal(typeof r.text,'string');assert.ok(r.summary);

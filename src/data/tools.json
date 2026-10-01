@@ -206,7 +206,8 @@
       "/tools/text/text-diff/",
       "/tools/text/text-cleaner/",
       "/tools/text/sort-lines/",
-      "/tools/text/remove-duplicate-lines/"
+      "/tools/text/remove-duplicate-lines/",
+      "/tools/developer/regex-tester/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -239,7 +240,9 @@
       "/tools/text/compare-lists/",
       "/tools/text/find-and-replace/",
       "/tools/text/text-cleaner/",
-      "/tools/text/word-counter/"
+      "/tools/text/word-counter/",
+      "/tools/data/json-compare/",
+      "/tools/developer/regex-tester/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -295,7 +298,9 @@
     ],
     "related": [
       "/tools/data/json-to-csv/",
-      "/tools/data/csv-to-json/"
+      "/tools/data/csv-to-json/",
+      "/tools/data/json-viewer/",
+      "/tools/data/json-compare/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -835,7 +840,8 @@
     ],
     "related": [
       "/tools/web/contrast-checker/",
-      "/tools/image/image-color-picker/"
+      "/tools/image/image-color-picker/",
+      "/tools/developer/number-base-converter/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -889,7 +895,9 @@
     ],
     "related": [
       "/tools/web/url-encoder-decoder/",
-      "/tools/web/html-entities/"
+      "/tools/web/html-entities/",
+      "/tools/developer/jwt-decoder/",
+      "/tools/developer/hash-generator/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -917,6 +925,220 @@
     "related": [
       "/tools/web/base64/",
       "/tools/text/text-cleaner/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP033",
+    "name": "JSON Viewer",
+    "slug": "json-viewer",
+    "category": "data",
+    "path": "/tools/data/json-viewer/",
+    "description": "Explore nested keys, values and paths in a collapsible JSON tree.",
+    "inputs": "Text and explicit options.",
+    "outputs": "Expandable tree and lossless formatted JSON.",
+    "method": "Parse a lossless syntax tree, render bounded expandable nodes and filter by text.",
+    "limitations": "1 MiB input · 3,000 tree values · 50 nesting levels",
+    "aliases": [
+      "json tree viewer",
+      "json visualizer",
+      "view json"
+    ],
+    "related": [
+      "/tools/data/json-formatter/",
+      "/tools/data/json-compare/",
+      "/tools/data/json-to-csv/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP034",
+    "name": "JSON Compare",
+    "slug": "json-compare",
+    "category": "data",
+    "path": "/tools/data/json-compare/",
+    "description": "Find structural additions, removals and changes in two JSON documents.",
+    "inputs": "Two text inputs.",
+    "outputs": "Inspectable text report; copy and download.",
+    "method": "Compare parsed objects by key, arrays by position and numbers by exact decimal value.",
+    "limitations": "1 MiB per input · 10,000 changes · 50 nesting levels",
+    "aliases": [
+      "json diff",
+      "compare json",
+      "compare two json files"
+    ],
+    "related": [
+      "/tools/data/json-viewer/",
+      "/tools/data/json-formatter/",
+      "/tools/text/text-diff/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP035",
+    "name": "Regex Tester",
+    "slug": "regex-tester",
+    "category": "developer",
+    "path": "/tools/developer/regex-tester/",
+    "description": "Inspect JavaScript regex matches, capture groups and positions.",
+    "inputs": "Text and explicit options.",
+    "outputs": "Inspectable text report; copy and download.",
+    "method": "Execute RegExp in a terminated-on-timeout worker, limiting output to 1,000 matches.",
+    "limitations": "256 KiB test text · 4 KiB pattern · 1,000 matches · 8-second timeout",
+    "aliases": [
+      "regex checker",
+      "regular expression tester",
+      "regex validator"
+    ],
+    "related": [
+      "/tools/text/find-and-replace/",
+      "/tools/text/text-diff/",
+      "/tools/text/word-counter/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP036",
+    "name": "JWT Decoder",
+    "slug": "jwt-decoder",
+    "category": "developer",
+    "path": "/tools/developer/jwt-decoder/",
+    "description": "Read a token’s JSON header and payload without claiming verification.",
+    "inputs": "Text and explicit options.",
+    "outputs": "Inspectable text report; copy and download.",
+    "method": "Strict Base64URL and UTF-8 decoding plus lossless JSON parsing; no signature verification.",
+    "limitations": "64 KiB token · three-part compact JSON tokens only",
+    "aliases": [
+      "decode jwt",
+      "jwt token decoder",
+      "jwt debugger"
+    ],
+    "related": [
+      "/tools/web/base64/",
+      "/tools/developer/unix-timestamp/",
+      "/tools/data/json-viewer/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP037",
+    "name": "UUID Generator",
+    "slug": "uuid-generator",
+    "category": "developer",
+    "path": "/tools/developer/uuid-generator/",
+    "description": "Generate one or a batch of random version-4 UUIDs.",
+    "inputs": "Batch quantity.",
+    "outputs": "Newline-separated UUID v4 batch.",
+    "method": "Browser Web Crypto randomUUID; bounded batches of 1–100.",
+    "limitations": "1–100 UUID v4 identifiers per batch",
+    "aliases": [
+      "uuid v4 generator",
+      "generate uuid",
+      "random uuid",
+      "guid generator"
+    ],
+    "related": [
+      "/tools/developer/hash-generator/",
+      "/tools/data/csv-to-json/",
+      "/tools/developer/unix-timestamp/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP038",
+    "name": "SHA Hash Generator",
+    "slug": "hash-generator",
+    "category": "developer",
+    "path": "/tools/developer/hash-generator/",
+    "description": "Fingerprint exact UTF-8 text with SHA-256, SHA-384 or SHA-512.",
+    "inputs": "Text and explicit options.",
+    "outputs": "Inspectable text report; copy and download.",
+    "method": "TextEncoder then Web Crypto digest; no trimming or normalization.",
+    "limitations": "1 MiB UTF-8 input · SHA-256, SHA-384 or SHA-512",
+    "aliases": [
+      "sha256 hash generator",
+      "sha384",
+      "sha512",
+      "text hash",
+      "hash generator online"
+    ],
+    "related": [
+      "/tools/web/base64/",
+      "/tools/developer/uuid-generator/",
+      "/tools/text/text-diff/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP039",
+    "name": "Unix Timestamp Converter",
+    "slug": "unix-timestamp",
+    "category": "developer",
+    "path": "/tools/developer/unix-timestamp/",
+    "description": "Convert epoch seconds or milliseconds and explicitly zoned dates.",
+    "inputs": "Text and explicit options.",
+    "outputs": "Inspectable text report; copy and download.",
+    "method": "Explicit integer units, UTC output and calendar-validated zoned date input.",
+    "limitations": "Whole seconds/milliseconds, or YYYY-MM-DDTHH:mm:ss[.SSS]Z / explicit offset",
+    "aliases": [
+      "epoch converter",
+      "timestamp to date",
+      "date to timestamp",
+      "unix timestamp"
+    ],
+    "related": [
+      "/tools/developer/jwt-decoder/",
+      "/tools/developer/number-base-converter/",
+      "/tools/data/json-viewer/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP040",
+    "name": "Number Base Converter",
+    "slug": "number-base-converter",
+    "category": "developer",
+    "path": "/tools/developer/number-base-converter/",
+    "description": "Convert exact signed integers between binary, octal, decimal and hex.",
+    "inputs": "Text and explicit options.",
+    "outputs": "Inspectable text report; copy and download.",
+    "method": "Validate all digits and prefixes before BigInt base conversion.",
+    "limitations": "4,096 digits · signed integers · bases 2, 8, 10 and 16",
+    "aliases": [
+      "binary to decimal",
+      "decimal to binary",
+      "decimal to hex",
+      "hexadecimal converter",
+      "octal converter"
+    ],
+    "related": [
+      "/tools/web/color-converter/",
+      "/tools/web/base64/",
+      "/tools/developer/unix-timestamp/"
     ],
     "status": "implemented",
     "version": "1.0.0",

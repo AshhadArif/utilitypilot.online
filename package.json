@@ -7,13 +7,14 @@
     "build": "node scripts/build.mjs",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",
-    "test": "node --test tests/processors.test.mjs tests/prelaunch.test.mjs",
+    "test": "node --test tests/processors.test.mjs tests/prelaunch.test.mjs tests/new-tools.test.mjs",
     "test:browser": "node tests/browser.mjs",
     "audit:site": "node scripts/audit.mjs",
     "check": "npm run test && npm run build && npm run audit:site",
     "audit:prelaunch": "node tests/prelaunch-browser.mjs",
     "audit:content": "node tests/seo-content-audit.mjs",
-    "audit:history": "node tests/ahrefs-history-audit.mjs"
+    "audit:history": "node tests/ahrefs-history-audit.mjs",
+    "audit:new-tools": "node tests/new-tools-static.mjs && node tests/new-tools-browser.mjs"
   },
   "engines": {
     "node": ">=22"

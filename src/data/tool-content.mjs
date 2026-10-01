@@ -1,7 +1,9 @@
+import {newContent} from './new-content.mjs';
 import {textContent} from './text-content.mjs';
 // Editorial content is specific to the operation; input is never inserted into it.
 export const content={
  ...textContent,
+ ...newContent,
  'json-formatter':{
   intro:'Make JSON readable, validate its syntax or produce compact output. Preserve large numeric values and the original order of object members.',
   steps:['Paste JSON or choose a UTF-8 JSON file.','Select two spaces, four spaces or minified output.','Format and validate; correct any reported line and column error before exporting.'],

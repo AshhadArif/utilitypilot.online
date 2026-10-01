@@ -10,3 +10,6 @@
 .card-category{color:#536359}
 
 .workflow-number,.privacy-band p{color:#4d5f4b}
+/* Bounded JSON explorer reuses the existing result panel and native controls. */
+.json-tree{max-width:100%;min-width:0;margin:20px 0}.json-tree>label{display:block;font-weight:600;margin-bottom:8px}.json-tree>input{width:100%;max-width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;font:inherit}.tree-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.tree-node{margin:6px 0;padding:4px 0 4px 12px;border-left:1px solid var(--line);overflow-wrap:anywhere;min-width:0}.tree-node p{margin:0}.tree-node summary{cursor:pointer;overflow-wrap:anywhere}.tree-node small{display:block;font-size:.75rem;color:var(--muted);overflow-wrap:anywhere}.tree-node code{white-space:pre-wrap;overflow-wrap:anywhere}.tool-icon.developer{background:#e7e4ef;color:#443564}.category-strip{grid-template-columns:repeat(5,minmax(0,1fr))}@media(max-width:1050px){.category-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:400px){.tree-node{padding-left:7px}}
+.json-tree>.tree-node{max-width:100%;max-height:650px;overflow:auto}

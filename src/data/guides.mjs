@@ -1,3 +1,4 @@
+import {developerGuide} from './new-hubs.mjs';
 export const guides=[
  {slug:'clean-copied-text',category:'text',title:'Clean copied text without losing paragraphs',description:'Repair hard wraps, non-breaking spaces and extra whitespace while preserving the structure that matters.',tools:['text-cleaner','word-counter','find-and-replace'],sections:[
  ['Start by deciding what a line break means','<p>A line break copied from a PDF may be the end of a visual line, not the end of a paragraph. In an address or a list, the same character may be essential. Keep an untouched copy and inspect a short section before applying changes to the whole document.</p><p>The Text cleaner starts conservatively: it normalizes line endings, replaces non-breaking spaces, trims line edges and collapses ordinary repeated spaces. It does not join lines unless you choose to.</p>'],
@@ -60,3 +61,5 @@ export const guides=[
  ['Read the correct threshold','<p>AA normal text requires 4.5:1 and AA large text 3:1. AAA normal text requires 7:1 and AAA large text 4.5:1. Large text means at least 18 points regular or 14 points bold—24 CSS pixels or approximately 18.67 CSS pixels bold.</p><p>Do not round before evaluating a threshold. A ratio of 4.499 can display as 4.50 but still fail the 4.5 requirement. The tool uses the unrounded calculation for its result.</p>'],
  ['Apply the result in context','<p>Check the real font size and weight, then inspect keyboard focus, errors and non-text controls separately. Passing a text color pair does not certify page accessibility, typography or readability.</p><p>Use the <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" rel="noreferrer">W3C contrast explanation</a> for the criterion and exceptions. Use Color converter when your editor requires a different notation; all these conversions remain in sRGB rather than a print CMYK workflow.</p>'] ]}
 ];
+
+guides.push(developerGuide);

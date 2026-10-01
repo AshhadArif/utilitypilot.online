@@ -15,7 +15,7 @@ site.googleSiteVerification='';
 const routes=JSON.parse(await readFile('dist/route-manifest.json','utf8'));
 const hosting=await readFile('dist/.htaccess','utf8');
 const rules=[...hosting.matchAll(/^RewriteRule (\S+) (\S+) \[R=301,L,NC,QSD\]$/gm)];
-assert.equal(rules.length,58);
+assert.equal(rules.length,routes.filter(r=>r.path!=='/404/').length);
 for(const route of routes.filter(r=>r.path!=='/404/')){
  const rule=rules.find(r=>r[2]===route.path);assert.ok(rule);
  const rx=new RegExp(rule[1],'i');

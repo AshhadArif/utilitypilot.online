@@ -12,7 +12,8 @@ page.on('request',r=>requests.push({url:r.url(),method:r.method(),body:r.postDat
 const run=async()=>{await page.locator('#run').click();await expect(page.locator('#result:visible,#tool-error:visible')).toHaveCount(1,{timeout:15000});};
 await mkdir('test-results/prelaunch',{recursive:true});
 try{
-for(const t of tools.filter(t=>t.category!=='image')){
+// Retain every original non-image fixture; new async tools have their own browser audit.
+for(const t of tools.filter(t=>t.category!=='image'&&Number(t.id.slice(2))<=32)){
  await page.goto(base+t.path);const cases=auditCases[t.slug];
  for(const c of cases){await page.locator('button[type=reset]').click();await page.locator('#input-a').fill(c.a);if(await page.locator('#input-b').count())await page.locator('#input-b').fill(c.b||'');
   for(const [key,value] of Object.entries(c.o||{})){const control=page.locator('#opt-'+key),tag=await control.evaluate(n=>n.tagName);if(typeof value==='boolean')await control.setChecked(value);else if(tag==='SELECT')await control.selectOption(String(value));else await control.fill(String(value));}
@@ -40,7 +41,7 @@ for(const t of tools.filter(t=>t.category==='image')){
  toolEvidence.push({slug:t.slug,independentCases:5,status:'pass'});console.log('AUDIT '+t.slug+' normal / one-pixel / empty / spoofed / oversized');
 }
 // Search must never navigate using stale suggestions after Escape or Clear.
-await page.goto(base+'/tools/');const search=page.locator('#tool-search');await search.fill('json');await search.press('ArrowUp');const active=await search.getAttribute('aria-activedescendant');assert.equal(active,'tool-search-option-2');await search.press('Escape');await search.press('Enter');assert.equal(new URL(page.url()).pathname,'/tools/');await search.fill('base64');await page.locator('[data-clear-search]').click();await search.press('Enter');assert.equal(new URL(page.url()).pathname,'/tools/');
+await page.goto(base+'/tools/');const search=page.locator('#tool-search');await search.fill('json');await search.press('ArrowUp');const active=await search.getAttribute('aria-activedescendant');assert.equal(active,await page.locator('.suggestion').last().getAttribute('id'));await search.press('Escape');await search.press('Enter');assert.equal(new URL(page.url()).pathname,'/tools/');await search.fill('base64');await page.locator('[data-clear-search]').click();await search.press('Enter');assert.equal(new URL(page.url()).pathname,'/tools/');
 // A modified report must not offer to copy/download stale details.
 await page.goto(base+'/report-an-error/');await page.locator('[name=reportDetails]').fill('audit synthetic issue');await page.locator('button[type=submit]').click();await expect(page.locator('#prepared-report')).toBeVisible();await page.locator('[name=reportDetails]').fill('changed issue');await expect(page.locator('#prepared-report')).toBeHidden();
 // Fetch every real route, inspect rendered metadata, heading order, breadcrumbs and links.

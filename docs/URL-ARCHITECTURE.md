@@ -1,5 +1,7 @@
 # URL architecture
 
+Expansion update, 2 October 2026: the [new-tool implementation](UTILITYPILOT-NEW-PAGE-IMPLEMENTATION.md) adds eight tool routes, `/tools/developer/` and `/guides/inspect-api-data/`. Current totals are 40 tools, five hubs, thirteen guides, 69 HTML routes and 67 indexable sitemap URLs. Existing canonical paths are preserved. The original launch plan below is historical.
+
 Canonical origin: https://utilitypilot.online. Lowercase, hyphens, trailing slash for HTML pages. One primary category per tool. Stable artifact-based paths make scope legible and future additions predictable. No year, version, device, locale or “free-online” tokens in tool slugs.
 
 ## Public structure
@@ -31,4 +33,3 @@ If a tool is removed and no equivalent exists, return 404/410 and remove interna
 ## Page accounting
 
 51 intended indexable content pages = 1 home + 1 directory + 4 hubs + 32 tools + 1 guides index + 12 guides. Seven trust/contact pages are additional; robots/indexing choices are in SEO-PLAN. 404/search/state/generated downloads are not content inventory.
-

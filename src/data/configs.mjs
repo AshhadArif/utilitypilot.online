@@ -1,3 +1,4 @@
+import {newConfigs} from './new-configs.mjs';
 const select=(key,label,values,value)=>({key,label,type:'select',values:values.map(v=>Array.isArray(v)?v:[v,v]),value:value??(Array.isArray(values[0])?values[0][0]:values[0])});
 const check=(key,label,value=false)=>({key,label,type:'checkbox',value});
 const text=(key,label,value='',help='')=>({key,label,type:'text',value,help});
@@ -14,6 +15,7 @@ const encode=select('action','Operation',[['encode','Encode'],['decode','Decode'
 const imageFormat=select('format','Output format',[['image/png','PNG'],['image/jpeg','JPEG'],['image/webp','WebP']]);
 const imageOut=[imageFormat,num('quality','Quality (JPEG / WebP)',85,1,100),text('matte','JPEG background color','#ffffff')];
 export const configs={
+ ...newConfigs,
  'word-counter':{sample:'A small task. A clear result. 👋',options:[locale,num('wpm','Reading speed (words/minute)',200,1,2000)],action:'Count text'},
  'text-cleaner':{sample:'  A  useful\u00a0idea\nwrapped across lines.\n\n  A new paragraph.  ',options:[check('nbsp','Replace non-breaking spaces',true),check('tabs','Replace tabs with spaces'),check('trim','Trim line edges',true),check('spaces','Collapse repeated spaces',true),check('blank','Collapse extra blank lines'),select('join','Line breaks',[['keep','Keep line breaks'],['paragraphs','Join hard wraps; keep paragraphs'],['all','Join all lines']]),check('zeroWidth','Remove zero-width characters (can alter emoji/scripts)')],action:'Clean text'},
  'remove-duplicate-lines':{sample:'apple\npear\napple\nApple',options:[...matching,keep],action:'Remove duplicates'},
