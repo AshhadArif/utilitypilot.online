@@ -63,7 +63,22 @@ export async function runDeveloper(slug,a='',b='',o={}){
   const header=decode(parts[0],'Header'),payload=decode(parts[1],'Payload');
   const alg=header.values.find(([k])=>k.value==='alg')?.[1];if(alg?.type!=='string'||!alg.value)throw Error('Header must contain a nonempty string alg field.');
   const signature=base64url(parts[2],'Signature',alg.value==='none');
-  return result('{\n  "verification": "NOT VERIFIED — decoding does not establish authenticity",\n  "header": '+formatJSON(header,2)+',\n  "payload": '+formatJSON(payload,2)+',\n  "signatureBase64url": '+JSON.stringify(parts[2])+',\n  "signatureBytes": '+signature.length+'\n}', 'Decoded only. Signature, issuer, audience and time claims have NOT been verified.',{filename:'decoded-jwt.json',mime:'application/json;charset=utf-8'});
+  const timeClaims={};
+  for(const name of ['iat','nbf','exp']){
+   const node=payload.values.find(([k])=>k.value===name)?.[1];if(!node)continue;
+   const source=formatJSON(node,0);
+   if(node.type!=='number'){timeClaims[name]={source,note:'Expected NumericDate seconds as a JSON number; not interpreted.'};continue;}
+   const m=/^(-?)(\d+)(?:\.(\d+))?(?:e([+-]?\d+))?$/i.exec(node.raw);
+   const digits=(m[2]+(m[3]||'')).replace(/^0+/,'');
+   const shift=Number(m[4]||0)-(m[3]||'').length+3;
+   // Truncate at the millisecond in decimal text, before converting to a Date number.
+   const whole=!digits?'0':shift>=0?(digits.length+shift>16?null:digits+'0'.repeat(shift)):digits.slice(0,Math.max(0,digits.length+shift))||'0';
+   const magnitude=whole===null?null:BigInt(whole);
+   if(magnitude===null||magnitude>8640000000000000n){timeClaims[name]={source,note:'Outside the supported UTC date range; not interpreted.'};continue;}
+   const milliseconds=Number(magnitude)*(m[1]? -1:1);
+   timeClaims[name]={source,utc:new Date(milliseconds).toISOString(),note:'Unverified NumericDate seconds; display has millisecond precision and truncates sub-millisecond fractions.'};
+  }
+  return result('{\n  "verification": "NOT VERIFIED — decoding does not establish authenticity",\n  "header": '+formatJSON(header,2)+',\n  "payload": '+formatJSON(payload,2)+',\n  "timeClaims": '+JSON.stringify(timeClaims,null,2)+',\n  "signatureBase64url": '+JSON.stringify(parts[2])+',\n  "signatureBytes": '+signature.length+'\n}', 'Decoded only. Signature, issuer, audience and time claims have NOT been verified.',{filename:'decoded-jwt.json',mime:'application/json;charset=utf-8'});
  }
  if(slug==='regex-tester'){
   guard(a,262144);const pattern=String(o.pattern??''),flags=String(o.flags??'g');guard(pattern,4096);

@@ -1,7 +1,10 @@
+import {expansionContent} from './expansion-content.mjs';
+import {improveExpansionContent} from './expansion-improvements.mjs';
 import {newContent} from './new-content.mjs';
 import {textContent} from './text-content.mjs';
 // Editorial content is specific to the operation; input is never inserted into it.
 export const content={
+ ...expansionContent,
  ...textContent,
  ...newContent,
  'json-formatter':{
@@ -125,3 +128,5 @@ export const content={
   explanation:'A bundled HTML entity table handles named and numeric references. Encoding protects markup-significant characters; numeric mode represents special characters by code point. Decoding follows HTML entity rules, which can leave unknown references unchanged. The output is assigned as plain text, never inserted as executable HTML.',
   example:['Tea & coffee','Encoding produces Tea &amp; coffee. Decoding reverses one entity layer.'],mistake:'Escaping for a text node is not a general sanitizer for HTML, JavaScript, URLs or attributes. Use context-appropriate handling in the application that receives the result.',guide:'url-encoding-and-tracking',faq:['Does decoding remove dangerous code?','No. It only changes representation. The tool displays decoded markup as inert text; another application must handle it safely.']}
 };
+
+improveExpansionContent(content);

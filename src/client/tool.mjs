@@ -3,6 +3,7 @@ const root=document.querySelector('[data-tool]');
 const slug=root.dataset.tool,category=root.dataset.toolCategory,config=configs[slug],form=document.querySelector('#tool-form');
 const $=s=>document.querySelector(s),inputA=$('#input-a'),inputB=$('#input-b'),error=$('#tool-error'),status=$('#tool-status'),output=$('#output'),resultPanel=$('#result');
 const treeRenderer=slug==='json-viewer'?(await import('./json-tree.mjs')).renderTree:null;
+const colorHelpers=slug==='contrast-checker'?await import('../lib/web.mjs'):null;
 let worker,timeout,controller,version=0,current=null,source=null,imageModule=null,files=[],columns=null,objectURLs=[];
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 function release(){objectURLs.forEach(URL.revokeObjectURL);objectURLs=[];}
@@ -33,6 +34,13 @@ form.addEventListener('submit',process);$('#cancel').addEventListener('click',()
 form.addEventListener('input',event=>{clearResult();if(event.target===inputA||event.target===inputB){files=[];columns=null;$('#file-list')?.replaceChildren();$('#columns')?.replaceChildren();}if(['opt-header','opt-delimiter'].includes(event.target.id)){columns=null;$('#columns')?.replaceChildren();}if(config.image&&source)imageModule?.syncControls(event.target,source,slug);});
 form.addEventListener('reset',()=>{clearResult();source=null;imageModule?.clearSource();files=[];columns=null;$('#file-list')?.replaceChildren();$('#columns')?.replaceChildren();if(config.image){const canvas=$('#source-canvas');canvas.width=1;canvas.height=1;$('.canvas-wrap').hidden=true;$('#image-details').textContent='';}status.textContent='Inputs and results cleared.';});
 $('#copy').addEventListener('click',async()=>{if(!current)return;try{await navigator.clipboard.writeText(current.text);status.textContent='Result copied.';}catch{output.focus();output.select();status.textContent='Clipboard unavailable. Output selected for manual copying.';}});
+if(colorHelpers){
+ const pairs=[[inputA,$('#foreground-picker')],[inputB,$('#background-picker')]];
+ const sync=()=>{for(const [input,picker]of pairs){try{const rgba=colorHelpers.parseColor(input.value);if(rgba[3]===1)picker.value=colorHelpers.colors(rgba).HEX;}catch{/* Keep invalid input visible for the processor's error message. */}}};
+ for(const [input,picker]of pairs){picker.addEventListener('input',()=>{input.value=picker.value;clearResult();});input.addEventListener('input',sync);}
+ $('#swap-colors').addEventListener('click',()=>{[inputA.value,inputB.value]=[inputB.value,inputA.value];clearResult();sync();status.textContent='Colors swapped. Run the check to update the result.';});
+ $('#sample').addEventListener('click',()=>queueMicrotask(sync));
+}
 $('#download').addEventListener('click',()=>{if(!current)return;download(current.blob||current.bytes||current.text,current.filename,current.mime);status.textContent='Download requested. The result remains available.';});
 async function setImage(file){clearResult();const job=version;source=null;imageModule?.clearSource();$('#image-details').textContent='';$('.canvas-wrap').hidden=true;try{imageModule??=await import('./image-client.mjs');const loaded=await imageModule.loadImage(file);if(job!==version)return;source=loaded;imageModule.displaySource(source,slug,clearResult);status.textContent='Image ready. Adjust options, then process.';}catch(e){if(job===version)fail(e.message);}}
 if(config.image){$('#image-file').addEventListener('change',event=>setImage(event.target.files[0]));const drop=$('.file-drop');drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag-over');});drop.addEventListener('dragleave',()=>drop.classList.remove('drag-over'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag-over');if(e.dataTransfer.files.length!==1){fail('Choose one image at a time.');return;}setImage(e.dataTransfer.files[0]);});}

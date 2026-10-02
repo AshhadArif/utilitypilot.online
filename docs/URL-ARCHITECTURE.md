@@ -1,5 +1,7 @@
 # URL architecture
 
+Latest Ahrefs expansion: [implementation report](UTILITYPILOT-EXPANSION-IMPLEMENTATION.md). Current totals are **43 tools, five hubs, 13 guides, 72 HTML routes and 70 indexable sitemap URLs**. Added `/tools/data/json-yaml-converter/`, `/tools/developer/unicode-converter/` and `/tools/web/markdown-to-html/`. All previous paths remain canonical and available. The earlier expansion and launch notes below are historical.
+
 Expansion update, 2 October 2026: the [new-tool implementation](UTILITYPILOT-NEW-PAGE-IMPLEMENTATION.md) adds eight tool routes, `/tools/developer/` and `/guides/inspect-api-data/`. Current totals are 40 tools, five hubs, thirteen guides, 69 HTML routes and 67 indexable sitemap URLs. Existing canonical paths are preserved. The original launch plan below is historical.
 
 Canonical origin: https://utilitypilot.online. Lowercase, hyphens, trailing slash for HTML pages. One primary category per tool. Stable artifact-based paths make scope legible and future additions predictable. No year, version, device, locale or “free-online” tokens in tool slugs.

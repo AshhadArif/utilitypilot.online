@@ -242,7 +242,8 @@
       "/tools/text/text-cleaner/",
       "/tools/text/word-counter/",
       "/tools/data/json-compare/",
-      "/tools/developer/regex-tester/"
+      "/tools/developer/regex-tester/",
+      "/tools/web/markdown-to-html/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -294,13 +295,16 @@
       "json beautifier",
       "validate json online",
       "json minifier",
-      "format json without losing large numbers"
+      "format json without losing large numbers",
+      "json validator",
+      "online json validator"
     ],
     "related": [
       "/tools/data/json-to-csv/",
       "/tools/data/csv-to-json/",
       "/tools/data/json-viewer/",
-      "/tools/data/json-compare/"
+      "/tools/data/json-compare/",
+      "/tools/data/json-yaml-converter/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -327,7 +331,8 @@
     ],
     "related": [
       "/tools/data/csv-to-json/",
-      "/tools/data/csv-column-editor/"
+      "/tools/data/csv-column-editor/",
+      "/tools/data/json-yaml-converter/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -705,7 +710,8 @@
     ],
     "related": [
       "/tools/web/url-parser/",
-      "/tools/text/text-cleaner/"
+      "/tools/text/text-cleaner/",
+      "/tools/web/markdown-to-html/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -850,7 +856,7 @@
   },
   {
     "id": "UP030",
-    "name": "Color contrast checker",
+    "name": "Color Contrast Checker",
     "slug": "contrast-checker",
     "category": "web",
     "path": "/tools/web/contrast-checker/",
@@ -891,13 +897,17 @@
       "base64 decode online",
       "base64url decoder",
       "decode base64 with emoji",
-      "base64 invalid utf8 bytes"
+      "base64 invalid utf8 bytes",
+      "base64 decode",
+      "base64 encode",
+      "base64 encoder decoder"
     ],
     "related": [
       "/tools/web/url-encoder-decoder/",
       "/tools/web/html-entities/",
       "/tools/developer/jwt-decoder/",
-      "/tools/developer/hash-generator/"
+      "/tools/developer/hash-generator/",
+      "/tools/developer/unicode-converter/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -924,7 +934,8 @@
     ],
     "related": [
       "/tools/web/base64/",
-      "/tools/text/text-cleaner/"
+      "/tools/text/text-cleaner/",
+      "/tools/web/markdown-to-html/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -950,7 +961,8 @@
     "related": [
       "/tools/data/json-formatter/",
       "/tools/data/json-compare/",
-      "/tools/data/json-to-csv/"
+      "/tools/data/json-to-csv/",
+      "/tools/data/json-yaml-converter/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -976,7 +988,8 @@
     "related": [
       "/tools/data/json-viewer/",
       "/tools/data/json-formatter/",
-      "/tools/text/text-diff/"
+      "/tools/text/text-diff/",
+      "/tools/data/json-yaml-converter/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -1002,7 +1015,8 @@
     "related": [
       "/tools/text/find-and-replace/",
       "/tools/text/text-diff/",
-      "/tools/text/word-counter/"
+      "/tools/text/word-counter/",
+      "/tools/developer/unicode-converter/"
     ],
     "status": "implemented",
     "version": "1.0.0",
@@ -1050,7 +1064,8 @@
       "uuid v4 generator",
       "generate uuid",
       "random uuid",
-      "guid generator"
+      "guid generator",
+      "random uuid generator"
     ],
     "related": [
       "/tools/developer/hash-generator/",
@@ -1078,7 +1093,8 @@
       "sha384",
       "sha512",
       "text hash",
-      "hash generator online"
+      "hash generator online",
+      "sha256 generator"
     ],
     "related": [
       "/tools/web/base64/",
@@ -1144,5 +1160,86 @@
     "version": "1.0.0",
     "processing": "browser",
     "privacy": "Memory only; no input uploads or automatic persistence"
+  },
+  {
+    "id": "UP041",
+    "name": "JSON / YAML Converter",
+    "slug": "json-yaml-converter",
+    "category": "data",
+    "path": "/tools/data/json-yaml-converter/",
+    "description": "Convert JSON and YAML configuration with explicit type and precision checks.",
+    "inputs": "Pasted text or supported local text file; explicit options.",
+    "outputs": "Inspectable text with copy and download.",
+    "method": "YAML 1.2 AST with strict JSON-compatible values; lossless integers.",
+    "limitations": "1 MiB, 50 levels, 20,000 values; no aliases, merge keys or multiple documents.",
+    "aliases": [
+      "json to yaml",
+      "yaml to json",
+      "yaml converter"
+    ],
+    "related": [
+      "/tools/data/json-formatter/",
+      "/tools/data/json-viewer/",
+      "/tools/data/json-compare/",
+      "/tools/data/json-to-csv/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input upload or automatic persistence"
+  },
+  {
+    "id": "UP042",
+    "name": "Unicode Converter",
+    "slug": "unicode-converter",
+    "category": "developer",
+    "path": "/tools/developer/unicode-converter/",
+    "description": "Encode or decode Unicode escapes and code points without changing normalization.",
+    "inputs": "Pasted text or supported local text file; explicit options.",
+    "outputs": "Inspectable text with copy and download.",
+    "method": "Validate scalar values and UTF-16 pairs; convert one layer without execution.",
+    "limitations": "256 KiB input; documented syntax and representation limits.",
+    "aliases": [
+      "unicode escape",
+      "unicode decoder",
+      "text to unicode",
+      "code point converter"
+    ],
+    "related": [
+      "/tools/developer/regex-tester/",
+      "/tools/web/base64/",
+      "/tools/web/html-entities/",
+      "/tools/text/word-counter/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input upload or automatic persistence"
+  },
+  {
+    "id": "UP043",
+    "name": "Markdown to HTML",
+    "slug": "markdown-to-html",
+    "category": "web",
+    "path": "/tools/web/markdown-to-html/",
+    "description": "Convert Markdown to HTML source with raw HTML escaped and unsafe links blocked.",
+    "inputs": "Pasted text or supported local text file; explicit options.",
+    "outputs": "Inspectable text with copy and download.",
+    "method": "Marked parser with escaped raw HTML, restricted destinations and plain-text output.",
+    "limitations": "256 KiB input; documented syntax and representation limits.",
+    "aliases": [
+      "markdown converter",
+      "markdown to html converter",
+      "md to html"
+    ],
+    "related": [
+      "/tools/web/html-entities/",
+      "/tools/text/text-diff/",
+      "/tools/web/slug-generator/"
+    ],
+    "status": "implemented",
+    "version": "1.0.0",
+    "processing": "browser",
+    "privacy": "Memory only; no input upload or automatic persistence"
   }
 ]

@@ -1,6 +1,8 @@
 # UtilityPilot
 
-40 local browser tools, 13 practical guides, five category hubs, a searchable directory, and seven trust/support pages. Built as crawlable static HTML with small JavaScript modules and local workers. No application server is needed for transformations.
+43 local browser tools, 13 practical guides, five category hubs, a searchable directory, and seven trust/support pages. Built as crawlable static HTML with small JavaScript modules and local workers. No application server is needed for transformations.
+
+The latest Ahrefs expansion adds JSON/YAML conversion, Unicode notation conversion and Markdown-to-HTML conversion, expands eight existing tool pages, and improves contrast controls and JWT time-claim inspection. See the [expansion audit](docs/UTILITYPILOT-EXPANSION-AUDIT.md), [40-keyword decision map](docs/UTILITYPILOT-AHREFS-EXPANSION-RESEARCH.md) and [implementation report](docs/UTILITYPILOT-EXPANSION-IMPLEMENTATION.md). Run `npm run audit:expansion` against a running preview (default port 4186 for this focused audit; set `AUDIT_BASE` to use another port).
 
 ## Run locally
 
