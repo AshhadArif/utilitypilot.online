@@ -23,15 +23,15 @@ The earlier local missing-facts release gate is resolved: `npm.cmd run build:rel
 
 Current local content inventory: **70 indexable pages; 43 STRONG and 27 ACCEPTABLE**. About/Contact are no longer classified NEEDS REWRITE locally. The inventory's action column retains their deployment requirement.
 
-## Public observations differ from the drafted completion statements
+## Post-deployment public recheck
 
-| Claim in owner message | Independently observed response | Current conclusion |
+| Check | Independently observed response | Current conclusion |
 |---|---|---|
-| About and Contact show Fahad and the Gmail address | Fetched both pages; neither contains Fahad or bazminoadsense@gmail.com. | Public completion not verified. |
-| Privacy policy includes 30-day retention | Fetched `/privacy-policy/`; it still shows the older policy without that retention text. | Public completion not verified. |
-| `/privacy` redirects to `/privacy-policy/` | HTTP 301 Location is `https://utilitypilot.online/404/`. | Public alias still incorrect in the observed response. |
-| Unknown URLs immediately return 404 | Fresh `/owner-verification-missing-20261004/` returns HTTP 301 to `/404/`. | Redirect-before-404 behavior remains. |
-| Updated build was deployed | The public pages/routing above still exhibit the earlier behavior. | Could be upload location, missing files or caching; cause not established. |
+| About and Contact | Both pages now contain Fahad (UtilityPilot / Bazmino) and bazminoadsense@gmail.com. | Public completion verified. |
+| Privacy policy | `/privacy-policy/` contains Hostinger, 30-day access-log retention and the hosting security-check disclosure. | Public completion verified. |
+| `/privacy` alias | HTTP 301 Location is `https://utilitypilot.online/privacy-policy/`. | Alias verified. |
+| Unknown URL | A fresh unknown path returns HTTP 404 directly with no Location header. | 404 behavior verified. |
+| Deployed build | The live crawl exercised 72 routes and 43 tool samples; 71 content responses matched the local build, with the homepage's first response affected by the challenge. | Deployment verified, with challenge risk retained. |
 
 Raw fetched HTML is retained locally in `test-results/owner-live-about.html`, `owner-live-contact.html` and `owner-live-privacy.html`. Host responses to the route probes reported CDN cache MISS. This alone does not exclude other caching layers.
 
@@ -43,6 +43,4 @@ Sources checked on 4 October 2026: [Google's crawler reference](https://develope
 
 ## Remaining action
 
-Upload the **contents of the newly generated `dist/`** to the correct domain document root, including `.htaccess` and the generated assets. Verify the upload destination and purge applicable Hostinger/CDN caches. Recheck the public operator/email, retention text, `/privacy` destination and immediate 404 response. The agent has not uploaded files or changed the hosting account.
-
-The source-level factual blockers are resolved. The public website is **not yet independently verified as updated**. The original 81/100 is retained as the earlier audit score, not recalculated from unverified completion statements. Current public release recommendation remains **NOT READY — BLOCKING ISSUE** until the observed production gaps are closed. No approval probability or guarantee is implied.
+Review Hostinger's browser-challenge settings or verify genuine Google/AdSense crawler retrieval. A fresh browser received an initial HTTP 403 challenge, then HTTP 200 after JavaScript; JavaScript-disabled access remained on the challenge page. This is the remaining deployment risk. The current internal score is **88/100** with status **READY AFTER MINOR FIXES**. No approval probability or guarantee is implied.

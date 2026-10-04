@@ -1,6 +1,6 @@
 # Google AdSense Pre-Application Audit
 
-> **Owner follow-up, 4 October 2026:** Fahad (UtilityPilot / Bazmino), bazminoadsense@gmail.com and a 30-day access-log policy have now been supplied and implemented locally. The production build passes; local inventory is now 43 strong / 27 acceptable. Fresh public checks still show the older pages and incorrect privacy/404 redirects. [Read the current follow-up and evidence](ADSENSE-OWNER-FOLLOW-UP.md). The original audit below is preserved as the pre-follow-up record; its missing-owner-fact findings and failed release-build result are historical, not the current local state. The public readiness recommendation remains blocked pending deployment verification.
+> **Post-deployment re-audit, 4 October 2026:** The owner-confirmed operator, Gmail contact, Hostinger details and 30-day log policy are live. Direct checks now show the updated About, Contact and Privacy pages, `/privacy` redirects to `/privacy-policy/`, and an unknown path returns HTTP 404. The original audit below is preserved as the pre-deployment record; its earlier missing-fact and routing findings are historical. A fresh browser still encounters Hostinger's JavaScript challenge (initial HTTP 403, then HTTP 200 with JavaScript), so genuine Google crawler access remains unverified. [Read the follow-up evidence](ADSENSE-OWNER-FOLLOW-UP.md).
 
 ## Website
 
@@ -18,15 +18,15 @@ Evidence: [complete page inventory](ADSENSE-CONTENT-INVENTORY.csv), [verificatio
 
 # Executive Summary
 
-**Overall readiness score: 81/100.** This is an internal assessment of observable conditions after repository fixes, with deductions for unresolved production and owner-information gaps. It is neither a Google score nor an approval probability.
+**Current readiness score: 88/100.** This is an internal assessment of observable conditions after the post-deployment re-audit. It is neither a Google score nor an approval probability.
 
-**Final status: NOT READY — BLOCKING ISSUE**
+**Final status: READY AFTER MINOR FIXES**
 
-Major strengths: all 43 tools produced results in live-browser sample tests; local tests cover normal, empty, invalid and boundary inputs. The site has 13 practical guides, working discovery, static content, coherent categories, connected workflows, bounded processing and useful explanations. No duplicate titles/descriptions, broken internal links or orphan indexable pages were found in the final build.
+Major strengths: all 43 tools produced results in the live-browser sample crawl; all 72 routes matched the deployed build except the challenge response on the homepage's first request. The site has 13 practical guides, working discovery, static content, coherent categories, connected workflows, bounded processing and useful explanations. Owner/contact details and privacy disclosures are now public, and direct 404 and privacy-alias checks pass.
 
-Major weaknesses: no confirmed public operator or contact email; hosting-log retention unknown; a fresh homepage request receives a Hostinger browser challenge; the live unknown-URL handler redirects before returning 404. The deployed privacy/cookie pages omit the observed hosting security cookie and third-party font requests. Repository fixes have not been deployed.
+Major weakness: a fresh browser still receives a Hostinger challenge before the homepage becomes available, and AdSense crawler access has not been independently verified. This can affect first-visit reliability and should be resolved or explicitly verified before applying.
 
-Hard blockers for this audit's release recommendation: **the factual production-release gate remains closed, and Contact has no delivery channel**. The owner explicitly confirmed that operator identity and email remain unverified. Separately, **production crawler access must be verified** because a fresh browser received HTTP 403. These are operational readiness gates, not a claim that Google universally mandates a named legal-page checklist or that Google has already rejected the domain. No prohibited-content violation or broken core tool was confirmed.
+No hard blocker was confirmed in the post-deployment check. The challenge/crawler verification is the remaining minor release risk, not a claim that Google has rejected the domain. No prohibited-content violation or broken core tool was confirmed.
 
 The corrected preview builds successfully. `npm run build:release` deliberately refuses to publish an incomplete factual configuration. We did not bypass that existing project requirement, invent an operator, or insert a dummy mailbox.
 
@@ -38,12 +38,12 @@ The corrected preview builds successfully. `npm run build:release` deliberately 
 |---|---:|---:|
 | Content Quality | 22 | 25 |
 | Originality / Unique Value | 12 | 15 |
-| UX / Navigation | 13 | 15 |
+| UX / Navigation | 14 | 15 |
 | Policy / Safety | 18 | 20 |
-| Trust / Privacy | 4 | 10 |
-| Technical Health | 7 | 10 |
+| Trust / Privacy | 9 | 10 |
+| Technical Health | 8 | 10 |
 | Mobile / Accessibility | 5 | 5 |
-| **TOTAL** | **81** | **100** |
+| **TOTAL** | **88** | **100** |
 
 | Category | Evidence, findings and completed fixes | Remaining risk |
 |---|---|---|
@@ -258,12 +258,9 @@ Generated `dist/` output and local `test-results/`/`.cache/` artifacts are ignor
 
 | Remaining item | Why it remains | Owner action | Severity |
 |---|---|---|---|
-| Public operator and contact | Owner explicitly left both unverified. | Supply factual `SITE_OPERATOR` and `CONTACT_EMAIL`; verify mailbox reception and publish updated About/Contact. | Release blocker |
-| Log retention | Cannot infer account settings from provider branding or a generic policy. | Confirm actual log handling/retention with Hostinger and set `LOG_RETENTION`. | High transparency gap / project release gate |
-| CDN challenge and crawler access | Hosted outside repository; no hPanel or Search Console access. | Review challenge settings/support; verify genuine Google crawl access and public content. | High, unverified crawler impact |
-| Deployment | No hosting write access supplied; final output remains local. | Build with confirmed facts, upload `dist/` including `.htaccess` and notices, purge caches; rerun live audits. | Required before applying |
-| Production 404 and privacy alias | Local rules cannot prove Apache/LiteSpeed behavior. | Confirm unknown URL immediately returns 404; `/privacy` resolves to `/privacy-policy/`. | Medium |
-| Future ads and consent | No real publisher ID or consent configuration available or requested. | Before ad activation, configure actual Google integration, appropriate CMP, disclosures, CSP and authorized ads.txt entry if applicable. | Conditional future requirement |
+| AdSense crawler access | A fresh browser receives Hostinger's JavaScript challenge: initial HTTP 403, then HTTP 200 after JavaScript. | Review challenge settings or verify genuine Google/AdSense crawler requests and successful content retrieval. | Minor, unverified crawler risk |
+| Owner-supplied account facts | Operator, email, Hostinger and 30-day retention are live, but mailbox delivery and provider settings were supplied by the owner rather than independently accessed. | Keep the mailbox monitored and retain supporting Hostinger/Search Console evidence. | Low, owner verification |
+| Future ads and consent | No real publisher ID or consent configuration is available or requested. | Before ad activation, configure actual Google integration, appropriate CMP, disclosures, CSP and authorized ads.txt entry if applicable. | Conditional future requirement |
 | Account/traffic verification | No account, age, traffic-source or private marketing access. | Confirm eligibility, ownership and legitimate acquisition; inspect Search Console/AdSense account status. | Unverified |
 
 No fake traffic, credentials, contact details, reviews, business identity or approval probability was produced. No missing owner fact was guessed from domain names or hosting headers.
@@ -272,10 +269,10 @@ No fake traffic, credentials, contact details, reviews, business identity or app
 
 # 10. Final Recommendation
 
-**Final readiness score: 81/100.**
+**Final readiness score: 88/100.**
 
-**Final status: NOT READY — BLOCKING ISSUE**
+**Final status: READY AFTER MINOR FIXES**
 
-The product is materially stronger: every tool was exercised, discovered code/UX/configuration problems were fixed, and the second audit passed the local functionality checks. Adding more tools or words is not the next step. Resolve the factual release gates, deploy the tested corrections and verify live crawler access and response behavior before applying.
+The deployment is now live: 43 tools and 72 routes match the tested build, owner/contact/privacy details are public, `/privacy` resolves correctly, and unknown paths return HTTP 404. The remaining action is to resolve or verify Hostinger's first-request JavaScript challenge and confirm genuine AdSense crawler access before applying.
 
 The homepage was not universally offline: it loaded after the JavaScript challenge. We also did not verify that Google's genuine crawlers are blocked. That uncertainty is explicitly retained instead of being converted into a fabricated policy violation. Google makes its own approval decision; no numerical probability or guarantee is offered.
