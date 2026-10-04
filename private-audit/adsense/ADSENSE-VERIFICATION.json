@@ -1,0 +1,150 @@
+{
+  "checked": "2026-10-04",
+  "scope": {
+    "routes": 72,
+    "indexable": 70,
+    "tools": 43,
+    "guides": 13,
+    "qualityCounts": {
+      "STRONG": 43,
+      "ACCEPTABLE": 27
+    }
+  },
+  "local": {
+    "pages": 72,
+    "toolSamples": 43,
+    "unexpectedStatuses": [],
+    "overflow": [],
+    "errors": [],
+    "external": [],
+    "cookies": [],
+    "orphanPages": [],
+    "internalPageLinks": 2611,
+    "probes": [
+      {
+        "path": "/adsense-audit-missing-page/",
+        "status": 404,
+        "location": ""
+      },
+      {
+        "path": "/tools/text/word-counter",
+        "status": 308,
+        "location": "/tools/text/word-counter/"
+      },
+      {
+        "path": "/tools/text/word-counter/?audit=1",
+        "status": 308,
+        "location": "/tools/text/word-counter/"
+      },
+      {
+        "path": "/TOOLS/TEXT/WORD-COUNTER/",
+        "status": 308,
+        "location": "/tools/text/word-counter/"
+      },
+      {
+        "path": "/tools/text/word-counter/index.html",
+        "status": 308,
+        "location": "/tools/text/word-counter/"
+      },
+      {
+        "path": "/route-manifest.json",
+        "status": 404,
+        "location": ""
+      },
+      {
+        "path": "/404.html",
+        "status": 404,
+        "location": ""
+      }
+    ]
+  },
+  "live": {
+    "toolSamples": 43,
+    "overflow": [],
+    "applicationErrors": [],
+    "failedAssets": [],
+    "external": [
+      "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap",
+      "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K4.woff2"
+    ],
+    "probes": [
+      {
+        "path": "/adsense-audit-missing-page/",
+        "status": 301,
+        "location": "https://utilitypilot.online/404/"
+      },
+      {
+        "path": "/tools/text/word-counter",
+        "status": 301,
+        "location": "https://utilitypilot.online/tools/text/word-counter/"
+      },
+      {
+        "path": "/tools/text/word-counter/?audit=1",
+        "status": 301,
+        "location": "https://utilitypilot.online/tools/text/word-counter/"
+      },
+      {
+        "path": "/TOOLS/TEXT/WORD-COUNTER/",
+        "status": 301,
+        "location": "https://utilitypilot.online/tools/text/word-counter/"
+      },
+      {
+        "path": "/tools/text/word-counter/index.html",
+        "status": 301,
+        "location": "https://utilitypilot.online/tools/text/word-counter/"
+      },
+      {
+        "path": "/route-manifest.json",
+        "status": 404,
+        "location": ""
+      },
+      {
+        "path": "/404.html",
+        "status": 301,
+        "location": "https://utilitypilot.online/404/"
+      }
+    ],
+    "freshEntry": [
+      {
+        "javaScriptEnabled": true,
+        "resolved": true,
+        "statuses": [
+          403,
+          200
+        ],
+        "external": [
+          "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap",
+          "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K4.woff2"
+        ],
+        "cookies": [
+          {
+            "name": "hcdn",
+            "domain": "utilitypilot.online",
+            "expires": -1,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+          }
+        ]
+      },
+      {
+        "javaScriptEnabled": false,
+        "resolved": false,
+        "statuses": [
+          403
+        ],
+        "external": [
+          "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap",
+          "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K4.woff2"
+        ],
+        "cookies": []
+      }
+    ]
+  },
+  "limits": [
+    "No deployment performed.",
+    "No hosting account, traffic analytics or Google account inspected.",
+    "Automated accessibility and viewport testing is not a full assistive-technology audit.",
+    "Google crawler access and field Core Web Vitals remain unverified."
+  ]
+}

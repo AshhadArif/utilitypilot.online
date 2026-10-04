@@ -14,7 +14,10 @@ assert.ok(html.includes('name="google-site-verification" content="test&quot;&lt;
 site.googleSiteVerification='';
 const routes=JSON.parse(await readFile('dist/route-manifest.json','utf8'));
 const hosting=await readFile('dist/.htaccess','utf8');
-const rules=[...hosting.matchAll(/^RewriteRule (\S+) (\S+) \[R=301,L,NC,QSD\]$/gm)];
+const allRules=[...hosting.matchAll(/^RewriteRule (\S+) (\S+) \[R=301,L,NC,QSD\]$/gm)];
+const privacyAlias=allRules.find(r=>r[1].startsWith('^privacy('));
+assert.ok(privacyAlias);assert.equal(privacyAlias[2],'/privacy-policy/');
+const rules=allRules.filter(r=>r!==privacyAlias);
 assert.equal(rules.length,routes.filter(r=>r.path!=='/404/').length);
 for(const route of routes.filter(r=>r.path!=='/404/')){
  const rule=rules.find(r=>r[2]===route.path);assert.ok(rule);
@@ -39,5 +42,11 @@ try{
  const secure=await fetch(base+'/',{headers:{'X-Forwarded-Proto':'https'}});
  assert.equal(secure.status,200);assert.equal(secure.headers.get('strict-transport-security'),'max-age=31536000');
  const spoof=await fetch(base+'/',{headers:{'X-Forwarded-Proto':'https,http'},redirect:'manual'});assert.equal(spoof.status,308);
+ for(const path of ['/privacy','/privacy/','/PRIVACY/index.html?unused=1']){
+  const alias=await fetch(base+path,{headers:{'X-Forwarded-Proto':'https'},redirect:'manual'});
+  assert.equal(alias.status,308);assert.equal(alias.headers.get('location'),'/privacy-policy/');
+ }
+ const missing=await fetch(base+'/adsense-missing-page/',{headers:{'X-Forwarded-Proto':'https'},redirect:'manual'});
+ assert.equal(missing.status,404);assert.equal(missing.headers.get('location'),null);
  console.log(`SEO additions checked on ${routes.length} routes; verification escaping and HTTPS proxy integration passed.`);
 }finally{child.kill();}

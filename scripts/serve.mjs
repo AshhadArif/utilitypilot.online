@@ -17,7 +17,7 @@ const server=http.createServer(async(req,res)=>{try{
  const url=new URL(req.url,'http://localhost');let pathname;try{pathname=decodeURIComponent(url.pathname);}catch{res.writeHead(400);res.end('Invalid path');return;}
  if(/[\\\x00-\x1f\x7f]/.test(pathname)||/%(?:2f|5c)/i.test(url.pathname)){res.writeHead(400);res.end('Invalid path');return;}
  const normalized=pathname.replace(/\/{2,}/g,'/').toLowerCase().replace(/\/index\.html$/,'/');
- const canonical=routeMap.has(normalized)?normalized:routeMap.has(normalized+'/')?normalized+'/':null;
+ const canonical=['/privacy','/privacy/'].includes(normalized)?'/privacy-policy/':routeMap.has(normalized)?normalized:routeMap.has(normalized+'/')?normalized+'/':null;
  const tls=transport(req.headers,{enforce,trustProxy});
  if(tls.redirect){res.writeHead(308,{Location:'https://utilitypilot.online'+(canonical||url.pathname),'Cache-Control':'no-store'});res.end();return;}
  if(tls.hsts)res.setHeader('Strict-Transport-Security','max-age=31536000');

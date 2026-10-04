@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "build:release": "node scripts/build.mjs --release",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",
-    "test": "node --test tests/processors.test.mjs tests/prelaunch.test.mjs tests/new-tools.test.mjs tests/expansion.test.mjs",
+    "test": "node --test tests/processors.test.mjs tests/prelaunch.test.mjs tests/new-tools.test.mjs tests/expansion.test.mjs tests/adsense.test.mjs",
     "test:browser": "node tests/browser.mjs",
     "audit:site": "node scripts/audit.mjs",
     "check": "npm run test && npm run build && npm run audit:site",

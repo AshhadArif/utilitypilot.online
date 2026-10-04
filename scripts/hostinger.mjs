@@ -16,9 +16,10 @@ RewriteRule ^ https://utilitypilot.online%{REQUEST_URI} [R=301,L]
 # Build metadata is not a public resource.
 RewriteRule ^(?:route-manifest\\.json|_headers)$ - [R=404,L]
 RewriteRule ^404(?:/index\\.html|/)?$ - [R=404,L,NC]
-RewriteCond %{ENV:REDIRECT_STATUS} ^$
+RewriteCond %{THE_REQUEST} "\\s/+404\\.html(?:[?\\s])" [NC]
 RewriteRule ^404\\.html$ /404/ [R=301,L]
 # Canonicalize only known pages; unknown URLs remain genuine 404s.
+RewriteRule ^privacy(?:/index\\.html|/)?$ /privacy-policy/ [R=301,L,NC,QSD]
 ${aliases}
 <IfModule mod_headers.c>
  Header always set X-Content-Type-Options "nosniff"

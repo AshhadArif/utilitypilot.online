@@ -67,7 +67,7 @@ export function runWeb(slug,a='',b='',o={}){
  }
  if(slug==='color-converter'){const values=colors(parseColor(a));return result(Object.entries(values).map(([k,v])=>k+': '+v).join('\n'),'Converted in sRGB; RGB channels rounded to the nearest byte.',{stats:values,swatch:values.HEX});}
  if(slug==='contrast-checker'){
-  required(b,'Background color');const foreground=parseColor(a),background=parseColor(b),ratio=contrast(foreground,background),size=number(o.size??16,'Font size (pixels)',1,300),large=size>=24||(o.bold&&size>=18.6667);
+  required(b,'Background color');const foreground=parseColor(a),background=parseColor(b),ratio=contrast(foreground,background),size=number(o.size??16,'Font size (pixels)',1,300),large=size>=24||(o.bold&&size>=14*96/72);
   const stats={'Contrast ratio':ratio.toFixed(2)+':1','AA normal text':ratio>=4.5?'Pass':'Fail','AA large text':ratio>=3?'Pass':'Fail','AAA normal text':ratio>=7?'Pass':'Fail','AAA large text':ratio>=4.5?'Pass':'Fail','Selected text AA':ratio>=(large?3:4.5)?'Pass':'Fail'};
   return result(Object.entries(stats).map(([k,v])=>k+': '+v).join('\n'),`${ratio.toFixed(2)}:1 contrast · ${large?'large':'normal'} text. A color-pair check is not a complete accessibility audit.`,{stats,contrast:{foreground:a.trim(),background:b.trim(),size,bold:!!o.bold}});
  }

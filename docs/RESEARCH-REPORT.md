@@ -111,7 +111,7 @@ Network/storage audits must verify the actual implementation before local-proces
 
 Build useful tools and original supporting content before applying. Page count is not an approval guarantee. Keep ads out of tool pages under this privacy design; consider reviewed editorial/hub inventory after actual provider/consent setup.
 
-Google's readiness guidance emphasizes content and navigation; ad-related privacy disclosures must reflect actual practices. [AdSense readiness](https://support.google.com/adsense/answer/7299563?hl=en), [privacy disclosures](https://support.google.com/publisherpolicies/answer/10437794?hl=en). [Full monetization plan](ADSENSE-COMPLIANCE.md)
+Google's readiness guidance emphasizes content and navigation; ad-related privacy disclosures must reflect actual practices. [AdSense readiness](https://support.google.com/adsense/answer/7299563?hl=en), [privacy disclosures](https://support.google.com/publisherpolicies/answer/10437794?hl=en). [Full monetization plan](../private-audit/adsense/ADSENSE-COMPLIANCE.md)
 
 ## 19. MVP roadmap
 
@@ -130,4 +130,3 @@ Crowded results, uncertain demand, browser resource limits, data-corruption edge
 Use [MVP-ROADMAP](MVP-ROADMAP.md) as the ordered implementation and acceptance checklist; [WEBSITE-SPEC](WEBSITE-SPEC.md) for UI, finder, registry and performance; [TOOL-CATALOG](TOOL-CATALOG.md) for processor contracts. Complete each advertised behavior before publishing the route.
 
 The owner must eventually supply actual operator/contact/hosting/reporting/ad-provider details. Implementation can proceed without invented legal facts; publication must wait for correct facts. No application code, frontend scaffold, components, placeholder pages, external messages or deployment were created during Prompt 1.
-

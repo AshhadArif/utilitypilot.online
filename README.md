@@ -1,5 +1,7 @@
 # UtilityPilot
 
+The [4 October 2026 AdSense audit](private-audit/adsense/ADSENSE-FINAL-AUDIT.md) covers all 72 routes and 43 tools locally and on the live site. See the [page inventory](private-audit/adsense/ADSENSE-CONTENT-INVENTORY.csv), [official policy sources](private-audit/adsense/ADSENSE-CURRENT-POLICY-SOURCES.md) and [owner follow-up](private-audit/adsense/ADSENSE-OWNER-FOLLOW-UP.md). These reports are kept outside the deployable source and are never copied into `dist/`. Owner-supplied operator/contact details and a 30-day log policy are now configured, and the release build passes. Fresh public checks still show the older pages and routing; deployment and AdSense crawler access require verification.
+
 43 local browser tools, 13 practical guides, five category hubs, a searchable directory, and seven trust/support pages. Built as crawlable static HTML with small JavaScript modules and local workers. No application server is needed for transformations.
 
 The latest Ahrefs expansion adds JSON/YAML conversion, Unicode notation conversion and Markdown-to-HTML conversion, expands eight existing tool pages, and improves contrast controls and JWT time-claim inspection. See the [expansion audit](docs/UTILITYPILOT-EXPANSION-AUDIT.md), [40-keyword decision map](docs/UTILITYPILOT-AHREFS-EXPANSION-RESEARCH.md) and [implementation report](docs/UTILITYPILOT-EXPANSION-IMPLEMENTATION.md). Run `npm run audit:expansion` against a running preview (default port 4186 for this focused audit; set `AUDIT_BASE` to use another port).
@@ -38,7 +40,7 @@ The independent pre-launch audit added precision, bounds, image, URL, discovery 
 
 ## Production release
 
-The local build is functional. Public release needs factual operator and hosting details. Set `SITE_OPERATOR`, `CONTACT_EMAIL`, `HOST_NAME`, `HOST_PRIVACY_URL`, and `LOG_RETENTION`, then build with `RELEASE=1`. The build rejects missing facts. Contact opens an email draft only when the real address is configured; reports are otherwise prepared/copied/downloaded locally, never silently submitted.
+Run `npm run build:release` (or `npm.cmd run build:release` on Windows). Owner-confirmed defaults are Fahad (UtilityPilot / Bazmino), bazminoadsense@gmail.com, Hostinger and 30-day access-log retention. Use `SITE_OPERATOR`, `CONTACT_EMAIL`, `LOG_RETENTION`, `HOST_NAME` and `HOST_PRIVACY_URL` to override those facts when they change. The release build rejects missing facts and unsafe contact/link values. This is a project release guard, not Google's eligibility checklist. Contact opens an email draft; reports are never silently submitted. Mailbox delivery and hosting-log deletion are owner-confirmed, not tested through this repository.
 
 Deploy `dist/` on an HTTPS static host. Preserve `_headers` where supported, or copy its security headers into the host configuration. Configure trailing-slash redirects, the non-www canonical host, genuine HTTP 404 responses using `404.html`, and stripping unused query parameters. Do not configure a single-page-app fallback returning HTTP 200 for missing paths. The supplied Node server demonstrates these behaviors and can run behind an HTTPS reverse proxy with `BIND_HOST` and `PORT` configured.
 

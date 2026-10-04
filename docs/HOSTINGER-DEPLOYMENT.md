@@ -1,5 +1,17 @@
 # Hostinger static deployment
 
+**Latest owner follow-up:** The operator, Gmail contact and 30-day access-log policy are now configured; `npm.cmd run build:release` passes. The earlier missing-fact notes below describe the first audit. Public responses still show the old pages and redirects despite the owner's deployment statement. See [the follow-up evidence](../private-audit/adsense/ADSENSE-OWNER-FOLLOW-UP.md) and upload the latest `dist/` contents to the correct document root before rechecking.
+
+## 4 October 2026 audit follow-up
+
+The domain is live and serves the 43-tool site. The audit changes have **not** been uploaded. Use `npm.cmd run build:release` after confirming the public operator, contact email and hosting-log retention. Hostinger and its official provider privacy URL are now configured from confirmed facts. The owner's `/privacy` address redirects to the existing `/privacy-policy/` after deployment; it does not create another policy page.
+
+Live checks found that a fresh homepage browser first receives a Hostinger HTTP 403 security challenge. It resolves to HTTP 200 with JavaScript, sets an `hcdn` session cookie, and loads Google Fonts; without JavaScript it remained blocked. Review the hosting security configuration and verify actual Google crawler access through the owner's tools or Hostinger support. Do not infer successful crawler access from robots.txt alone. No claim is made that all visitors or verified Google crawlers receive the same response.
+
+An unknown live URL returned a 301 to `/404/`, followed by 404. The generated configuration now uses `THE_REQUEST` to identify direct `/404.html` requests, keeping an internal error-document request from triggering that redirect. This Apache/LiteSpeed change is source-reviewed and regression-tested as configuration; execute it on Hostinger and confirm that a fresh unknown path immediately returns 404 with no Location header. Purge caches after deploying. The local Node server already returns a direct 404.
+
+The historical handover below describes the original deployment procedure; the current audit supersedes its earlier statements that all live checks were pending.
+
 This project builds static HTML and browser JavaScript. For standard Hostinger web hosting, upload the **contents** of `dist/` into this domain's `public_html/`, including the hidden `.htaccess`. Do not upload the source repository, dependencies, tests or private environment files. No Node server is needed for this hosting mode. Back up existing hosting files before replacing them. A Hostinger VPS or Website Builder product needs a different deployment workflow; this configuration targets Apache/LiteSpeed web hosting.
 
 1. Connect the domain in hPanel and provision SSL covering apex and www. Confirm the certificate is active before enabling redirects. Hostinger provides an [HTTPS control](https://www.hostinger.com/support/1583201-how-to-enable-or-disable-https-for-your-website-at-hostinger/).

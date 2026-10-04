@@ -7,13 +7,18 @@ import {configs} from '../src/data/configs.mjs';
 import {content} from '../src/data/tool-content.mjs';
 import site from '../site.config.mjs';
 import {hostingerConfig} from './hostinger.mjs';
+import {validateSite} from './validate-site.mjs';
 const out=path.resolve('dist');if(out!==path.join(process.cwd(),'dist'))throw Error('Invalid build directory');
-if(process.env.RELEASE==='1'){
- for(const key of ['operator','contactEmail','hostName','hostPrivacyUrl','logRetention'])if(!site[key])throw Error(`Release requires factual site configuration: ${key}`);
- if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(site.contactEmail))throw Error('CONTACT_EMAIL must be a verified valid address.');
-}
+validateSite(site,{release:process.env.RELEASE==='1'||process.argv.includes('--release')});
 const paths=new Set();for(const t of tools){if(paths.has(t.path)||!configs[t.slug]||!content[t.slug])throw Error('Invalid tool registry '+t.slug);paths.add(t.path);for(const p of t.related)if(!tools.some(x=>x.path===p))throw Error('Unknown related tool '+p);if(!guides.some(g=>g.slug===content[t.slug].guide))throw Error('Unknown guide');}
 await rm(out,{recursive:true,force:true});await mkdir(out,{recursive:true});await cp('public',out,{recursive:true});await mkdir(path.join(out,'assets'),{recursive:true});
+// Bundled dependencies retain their distribution notices in the deployed output.
+const notices=[];
+for(const name of ['diff','entities','marked','yaml']){
+ const pkg=JSON.parse(await readFile(`node_modules/${name}/package.json`,'utf8'));
+ notices.push(`${name} ${pkg.version}\n${'='.repeat(60)}\n${await readFile(`node_modules/${name}/LICENSE`,'utf8')}`);
+}
+await writeFile(path.join(out,'assets/third-party-notices.txt'),notices.join('\n\n'));
 const bundle=await build({entryPoints:{site:'src/client/site.mjs',tool:'src/client/tool.mjs',worker:'src/client/worker.mjs'},bundle:true,format:'esm',splitting:true,outdir:'dist/assets',entryNames:'[name]',chunkNames:'chunks/[name]-[hash]',minify:true,sourcemap:false,target:['es2022'],metafile:true,logLevel:'warning',plugins:[{name:'search-index',setup(b){b.onResolve({filter:/^utilitypilot:search-index$/},()=>({path:'search-index',namespace:'utilitypilot'}));b.onLoad({filter:/.*/,namespace:'utilitypilot'},()=>({loader:'json',contents:JSON.stringify(tools.map(({name,slug,description,aliases,path,category})=>({name,slug,description,aliases,path,category})))}));}}]});
 await writeFile('dist/assets/styles.css',(await transform(await readFile('src/styles.css','utf8'),{loader:'css',minify:true})).code);
 const pages=[];
