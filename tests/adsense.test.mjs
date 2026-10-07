@@ -33,3 +33,9 @@ test('404 redirect checks the original request so internal error documents stay 
  assert.ok(config.includes('RewriteCond %{THE_REQUEST} "\\s/+404\\.html(?:[?\\s])" [NC]'));
  assert.ok(!config.includes('ENV:REDIRECT_STATUS'));
 });
+test('robots.txt is served directly before host and HTTPS canonical redirects',()=>{
+ const config=hostingerConfig([]);
+ const allowRule=config.indexOf('RewriteRule ^robots\\.txt$ - [END]');
+ const canonicalRedirect=config.indexOf('RewriteCond %{HTTPS}');
+ assert.ok(allowRule>=0&&allowRule<canonicalRedirect);
+});

@@ -10,6 +10,9 @@ Options -Indexes -MultiViews
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
 RewriteEngine On
+# Serve a crawl policy directly on each protocol/host before canonical redirects.
+# Crawlers fetch robots.txt separately for http, https, www and apex origins.
+RewriteRule ^robots\\.txt$ - [END]
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} !^utilitypilot\\.online$ [NC]
 RewriteRule ^ https://utilitypilot.online%{REQUEST_URI} [R=301,L]
