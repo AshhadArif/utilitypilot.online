@@ -1,5 +1,6 @@
 import {expansionContent} from './expansion-content.mjs';
 import {improveExpansionContent} from './expansion-improvements.mjs';
+import {upgradeThinContent} from './thin-content-upgrades.mjs';
 import {newContent} from './new-content.mjs';
 import {textContent} from './text-content.mjs';
 // Editorial content is specific to the operation; input is never inserted into it.
@@ -130,3 +131,4 @@ export const content={
 };
 
 improveExpansionContent(content);
+upgradeThinContent(content);

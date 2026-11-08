@@ -1,4 +1,5 @@
 import {developerGuide} from './new-hubs.mjs';
+import {expandGuides} from './guide-expansions.mjs';
 export const guides=[
  {slug:'clean-copied-text',category:'text',title:'Clean copied text without losing paragraphs',description:'Repair hard wraps, non-breaking spaces and extra whitespace while preserving the structure that matters.',tools:['text-cleaner','word-counter','find-and-replace'],sections:[
  ['Start by deciding what a line break means','<p>A line break copied from a PDF may be the end of a visual line, not the end of a paragraph. In an address or a list, the same character may be essential. Keep an untouched copy and inspect a short section before applying changes to the whole document.</p><p>The Text cleaner starts conservatively: it normalizes line endings, replaces non-breaking spaces, trims line edges and collapses ordinary repeated spaces. It does not join lines unless you choose to.</p>'],
@@ -63,3 +64,4 @@ export const guides=[
 ];
 
 guides.push(developerGuide);
+expandGuides(guides);
