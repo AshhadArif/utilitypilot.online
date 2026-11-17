@@ -6,5 +6,13 @@ export default {
   hostPrivacyUrl: process.env.HOST_PRIVACY_URL || 'https://www.hostinger.com/legal/privacy-policy',
   logRetention: process.env.LOG_RETENTION || '30 days',
   googleSiteVerification: process.env.GOOGLE_SITE_VERIFICATION || '',
-  releaseDate: '2026-09-25'
+  releaseDate: '2026-09-25',
+  founded: '2026-09-25',
+  contentUpdated: process.env.CONTENT_UPDATED || '2026-11-17',
+  author: {
+    name: process.env.AUTHOR_NAME || 'Fahad',
+    role: process.env.AUTHOR_ROLE || 'Founder and maintainer',
+    url: '/author/',
+    sameAs: []
+  }
 };

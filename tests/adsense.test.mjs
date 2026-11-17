@@ -23,7 +23,7 @@ test('structured metadata preserves angle brackets without closing the script',(
  const title='A < B </script><script>unsafe</script>';
  const html=layout({path:'/',title,description:title,body:'<h1>Fixture</h1>'});
  const raw=html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1];
- assert.ok(!raw.includes('<'));assert.equal(JSON.parse(raw)[1].name,title);
+ assert.ok(!raw.includes('<'));assert.equal(JSON.parse(raw).find(x=>x['@type']==='WebPage').name,title);
 });
 test('privacy alias redirects to the existing policy instead of adding a duplicate',()=>{
  assert.ok(hostingerConfig([]).includes('RewriteRule ^privacy(?:/index\\.html|/)?$ /privacy-policy/ [R=301,L,NC,QSD]'));

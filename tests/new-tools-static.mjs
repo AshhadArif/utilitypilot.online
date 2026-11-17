@@ -6,7 +6,7 @@ import tools from '../src/data/tools.json' with {type:'json'};
 const routes=JSON.parse(await readFile('dist/route-manifest.json','utf8')),baseline=await readFile('docs/UTILITYPILOT-EXISTING-SITE-AUDIT.md','utf8');
 await mkdir('test-results/new-tools',{recursive:true});
 for(const t of tools.filter(t=>Number(t.id.slice(2))<=32)){assert.ok(baseline.includes(`| ${t.path} |`));assert.ok(routes.some(r=>r.path===t.path));}
-assert.equal(tools.length,43);assert.equal(routes.length,72);assert.equal(routes.filter(r=>!r.noindex).length,70);
+assert.equal(tools.length,43);assert.equal(routes.length,76);assert.equal(routes.filter(r=>!r.noindex).length,74);
 const pages=[];
 for(const [slug,c] of Object.entries(newContent)){
  const t=tools.find(t=>t.slug===slug),html=await readFile('dist'+t.path+'index.html','utf8');

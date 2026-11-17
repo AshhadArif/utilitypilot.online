@@ -249,7 +249,7 @@ const upgrades={
  'image-color-picker':{
   title:'Image Color Picker — Sample HEX, RGB and HSL from Pixels | UtilityPilot',description:'Pick a color from an exact pixel or average a small square; copy HEX, RGB and HSL for design work.',h1:'Image Color Picker',
   sections:[
-   s('sample','Pixel and square sampling','<p>X and Y start at zero in the top-left corner of the decoded image (orientation applied). Click or tap the preview, or enter coordinates. Square sample extends right and down from that coordinate; channels are arithmetically averaged across the selected pixels, including alpha. Values represent the browser’s decoded sRGB image.</p><p>Single-pixel sampling is best for flat UI colours. Square averaging reduces noise on photographic or anti-aliased areas. Neither mode guesses a palette or dominant colours—it samples only what you select.</p>'),
+   s('sampling','Pixel and square sampling','<p>X and Y start at zero in the top-left corner of the decoded image (orientation applied). Click or tap the preview, or enter coordinates. Square sample extends right and down from that coordinate; channels are arithmetically averaged across the selected pixels, including alpha. Values represent the browser’s decoded sRGB image.</p><p>Single-pixel sampling is best for flat UI colours. Square averaging reduces noise on photographic or anti-aliased areas. Neither mode guesses a palette or dominant colours—it samples only what you select.</p>'),
    s('examples','Sampling example','<pre>Coordinate (12, 40) on a solid red region\n\nHEX #ff0000\nRGB rgb(255 0 0)\nHSL hsl(0 100% 50%)</pre><p>Copy the notation you need. To translate between notations further, use <a href="/tools/web/color-converter/">Color Converter</a>. To check a text colour against a background, open <a href="/tools/web/contrast-checker/">Contrast Checker</a> with the sampled HEX.</p>'),
    s('accuracy','Accuracy and colour profiles','<p>A sampled pixel is not necessarily a brand’s official colour. Anti-aliased edges, JPEG artifacts, display profiles and partial transparency all shift values. Transparent pixels need a background before contrast testing. The tool does not manage ICC profiles or convert between display gamuts.</p><p>For brand colours, prefer the official HEX/CMYK from the design system; use sampling when you only have a raster screenshot.</p>'),
    s('workflow','From pixel to design token','<p>Workflow: open image → sample (pixel or square) → copy HEX → convert notation if needed → check contrast for actual text size/weight → record the value in your design tokens. Keep the source image if you will sample again after edits.</p>')
@@ -305,7 +305,7 @@ export function upgradeThinContent(content){
    ...old,...update,
    sections:[
     s('use','How to use this tool','<ol>'+old.steps.map(x=>'<li>'+e(x)+'</li>').join('')+'</ol>'),
-    s('method','How the operation works','<p>'+e(old.explanation)+'</p>'),
+    s('how-the-operation-works','How the operation works','<p>'+e(old.explanation)+'</p>'),
     ...update.sections,
     s('original-example','A worked example',`<pre>${e(old.example[0])}</pre><p>${e(old.example[1])}</p><p>${e(old.mistake)}</p>`),
     privacy(update.privacyNote||'This operation runs in your browser on the material you select.')

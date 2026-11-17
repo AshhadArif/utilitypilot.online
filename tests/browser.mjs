@@ -9,7 +9,7 @@ const routes=JSON.parse(await readFile('dist/route-manifest.json','utf8'));
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const context=await browser.newContext({viewport:{width:1280,height:900},permissions:['clipboard-read','clipboard-write']});
 const page=await context.newPage(),errors=[],external=[],checks=[];
-page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(base)&&!r.url().startsWith('blob:')&&!r.url().startsWith('data:'))external.push(r.url());});
+page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(base)&&!r.url().startsWith('blob:')&&!r.url().startsWith('data:')&&!/^https:\/\/(?:[a-z0-9-]+\.)*(?:googlesyndication\.com|doubleclick\.net|google\.com|gstatic\.com|adtrafficquality\.google|googletagservices\.com)\//i.test(r.url()))external.push(r.url());});
 await mkdir('test-results',{recursive:true});
 try{
 for(const t of tools){

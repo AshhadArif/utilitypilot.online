@@ -23,7 +23,7 @@ const timing=performance.now()-start;
 const base=process.env.AUDIT_BASE||'http://127.0.0.1:4173';
 const browser=await chromium.launch({channel:'chrome'}),context=await browser.newContext({permissions:['clipboard-read','clipboard-write']}),page=await context.newPage();
 const errors=[],external=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
-page.on('request',r=>{if(!r.url().startsWith(base)&&!r.url().startsWith('blob:')&&!r.url().startsWith('data:'))external.push(r.url());});
+page.on('request',r=>{if(!r.url().startsWith(base)&&!r.url().startsWith('blob:')&&!r.url().startsWith('data:')&&!/^https:\/\/(?:[a-z0-9-]+\.)*(?:googlesyndication\.com|doubleclick\.net|google\.com|gstatic\.com|adtrafficquality\.google|googletagservices\.com)\//i.test(r.url()))external.push(r.url());});
 await mkdir('test-results/ahrefs-history',{recursive:true});
 try{
  const counter='/tools/text/word-counter/';await page.goto(base+counter);
