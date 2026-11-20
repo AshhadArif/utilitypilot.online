@@ -301,13 +301,16 @@ const upgrades={
 export function upgradeThinContent(content){
  for(const [slug,update] of Object.entries(upgrades)){
   const old=content[slug];if(!old)continue;
+  const detailedSections=update.sections||[];
+  const hasTaskSpecificExplanation=detailedSections.length>0;
+  const hasTaskSpecificExample=detailedSections.some(section=>/example/i.test(`${section.id} ${section.title}`));
   content[slug]={
    ...old,...update,
    sections:[
     s('use','How to use this tool','<ol>'+old.steps.map(x=>'<li>'+e(x)+'</li>').join('')+'</ol>'),
-    s('how-the-operation-works','How the operation works','<p>'+e(old.explanation)+'</p>'),
-    ...update.sections,
-    s('original-example','A worked example',`<pre>${e(old.example[0])}</pre><p>${e(old.example[1])}</p><p>${e(old.mistake)}</p>`),
+    ...(hasTaskSpecificExplanation?[]:[s('how-the-operation-works','How the operation works','<p>'+e(old.explanation)+'</p>')]),
+    ...detailedSections,
+    ...(hasTaskSpecificExample?[]:[s('original-example','A worked example',`<pre>${e(old.example[0])}</pre><p>${e(old.example[1])}</p><p>${e(old.mistake)}</p>`)]),
     privacy(update.privacyNote||'This operation runs in your browser on the material you select.')
    ],
    faqs:update.faqs
